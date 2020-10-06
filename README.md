@@ -23,7 +23,7 @@ To display the plugins content (sources, materials, blueprints ...) in the Conte
 ![](/Doc/set3.png)
 
 ## Setting Up the Plugin
-- Enable the Plugin in the Project Settings.
+- Enable the Plugin in the Project Settings. (It should be under "Project" not "Built-In"; Scroll all the way down in the plugins windows left bar.)
 - Select "OffAxisLocalPlayer" as Local Player Class in the Engine - General Settings
 
 ![](/Doc/set1.png)
