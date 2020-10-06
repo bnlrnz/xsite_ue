@@ -6,7 +6,7 @@ Unreal Engine Cave Plugin for Version 4.25.
 This works on Linux only for now because the plugin bundles VRPN precompiled for Linux. This should be easily replaceable with the Windows version. Make shure to compile VRPN with the same compiler as Unreal Engine. 
 
 ## Installation
-Clone into Plugin folder of your Unreal Engine Project or add as submodule. Initialize and pull git lfs.
+Clone into "Plugins" folder (if it is not there, create it in your project root) of your Unreal Engine Project or add as submodule. Initialize and pull git lfs.
 
 ```Bash
 git clone git@github.com:bnlrnz/xsite_ue.git or git submodule add git@github.com:bnlrnz/xsite_ue.git
