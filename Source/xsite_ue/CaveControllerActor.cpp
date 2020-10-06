@@ -239,7 +239,7 @@ void ACaveControllerActor::LoadWallScreenConfig()
                 OffAxisCameraExtraWindowActor->ScreenTopLeft = FVector(Screen_tl);
                 OffAxisCameraExtraWindowActor->ScreenBottomLeft = FVector(Screen_bl);
                 OffAxisCameraExtraWindowActor->ScreenBottomRight = FVector(Screen_br);
-                OffAxisCameraExtraWindowActor->ConfigurePostProcessingMaterials(Proj, Wall);
+                OffAxisCameraExtraWindowActor->ConfigurePostProcessingMaterials(this, Proj, Wall);
 
                 UGameplayStatics::FinishSpawningActor(OffAxisCameraExtraWindowActor, FTransform());
 

@@ -58,8 +58,10 @@ public:
     void Cave_SetBlendingAll(bool enabled);
 
     private:
+        UPROPERTY()
         ACaveHeadCharacter* CachedCaveHeadCharacter = nullptr;
         
+        UPROPERTY()
         ACaveControllerActor* CachedCaveController = nullptr;
 };
 

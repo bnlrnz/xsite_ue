@@ -67,7 +67,7 @@ void ACaveHeadCharacter::BeginPlay()
 
     HeadOrigin = CaveGameInstance->GetCaveController()->EyeOrigin;
 
-    if (CaveController == nullptr)
+    if (IsValid(CaveController))
     {
         UE_LOG(LogCave, Warning, TEXT("[ACaveHeadCharacter::BeginPlay] Could not obtain CaveController from GameInstance. Make shure there is an instance of CaveController (e.g. Blueprint) in your scene."));
         return;

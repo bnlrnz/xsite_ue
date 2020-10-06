@@ -205,12 +205,9 @@ void AMultiViewportCameraActor::BeginPlay()
 }
 
 
-void AMultiViewportCameraActor::ConfigureBlendMaterial(const FProjectorData& ScreenCalibrationData, const FWallData& WallCalibrationData){
-    CaveGameInstance = Cast<UCaveGameInstance>(GetWorld()->GetGameInstance());
-    auto CaveController = CaveGameInstance->GetCaveController();
-
+void AMultiViewportCameraActor::ConfigureBlendMaterial(const ACaveControllerActor * const &CaveController, const FProjectorData& ScreenCalibrationData, const FWallData& WallCalibrationData){
     FString FullPath = IFileManager::Get().ConvertToAbsolutePathForExternalAppForRead(
-        *(CaveController->BlendTextureFolderPath.Path.Append(ScreenCalibrationData.alphamask))
+        *(CaveController->BlendTextureFolderPath.Path + ScreenCalibrationData.alphamask)
     );
 
     if (ScreenCalibrationData.alphamask.Len() == 0)
@@ -326,9 +323,9 @@ void AMultiViewportCameraActor::ConfigureWarpMaterial(const FProjectorData& Scre
 
 }
 
-void AMultiViewportCameraActor::ConfigurePostProcessingMaterials(const FProjectorData& ScreenCalibrationData, const FWallData& WallCalibrationData)
+void AMultiViewportCameraActor::ConfigurePostProcessingMaterials(const ACaveControllerActor * const &CaveController, const FProjectorData& ScreenCalibrationData, const FWallData& WallCalibrationData)
 {
-    ConfigureBlendMaterial(ScreenCalibrationData, WallCalibrationData);
+    ConfigureBlendMaterial(CaveController, ScreenCalibrationData, WallCalibrationData);
     ConfigureWarpMaterial(ScreenCalibrationData, WallCalibrationData);
 }
 

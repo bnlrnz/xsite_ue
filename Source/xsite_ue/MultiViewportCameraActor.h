@@ -89,8 +89,8 @@ public:
     
     // must be called before BeginPlay() !
     // this will set up the warping and blending
-    void ConfigurePostProcessingMaterials(const FProjectorData& ScreenCalibrationData, const FWallData& WallCalibrationData);
-    void ConfigureBlendMaterial(const FProjectorData& ScreenCalibrationData, const FWallData& WallCalibrationData);
+    void ConfigurePostProcessingMaterials(const ACaveControllerActor * const & CaveController, const FProjectorData& ScreenCalibrationData, const FWallData& WallCalibrationData);
+    void ConfigureBlendMaterial(const ACaveControllerActor * const & CaveController, const FProjectorData& ScreenCalibrationData, const FWallData& WallCalibrationData);
     void ConfigureWarpMaterial(const FProjectorData& ScreenCalibrationData, const FWallData& WallCalibrationData);
 
     ///////////////////
