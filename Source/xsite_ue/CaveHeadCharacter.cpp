@@ -4,7 +4,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Engine.h"
 #include "MultiViewportCameraActor.h"
-#include "UnrealNetwork.h"
+#include "Net/UnrealNetwork.h"
 #include "CaveGameModeBase.h"
 
 static TAutoConsoleVariable<int> HeadTrackerID(
