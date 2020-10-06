@@ -6,7 +6,7 @@
 #include "Engine/StaticMeshSocket.h"
 #include "FlystickManipulatable.h"
 #include "Kismet/KismetMathLibrary.h"
-#include "UnrealNetwork.h"
+#include "Net/UnrealNetwork.h"
 #include "Engine.h"
 
 /*
