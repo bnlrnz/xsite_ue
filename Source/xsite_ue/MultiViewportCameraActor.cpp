@@ -206,7 +206,12 @@ void AMultiViewportCameraActor::BeginPlay()
 
 
 void AMultiViewportCameraActor::ConfigureBlendMaterial(const FProjectorData& ScreenCalibrationData, const FWallData& WallCalibrationData){
-    FString FullPath = IFileManager::Get().ConvertToAbsolutePathForExternalAppForRead(*ScreenCalibrationData.alphamask);
+    CaveGameInstance = Cast<UCaveGameInstance>(GetWorld()->GetGameInstance());
+    auto CaveController = CaveGameInstance->GetCaveController();
+
+    FString FullPath = IFileManager::Get().ConvertToAbsolutePathForExternalAppForRead(
+        *(CaveController->BlendTextureFolderPath.Path.Append(ScreenCalibrationData.alphamask))
+    );
 
     if (ScreenCalibrationData.alphamask.Len() == 0)
     {

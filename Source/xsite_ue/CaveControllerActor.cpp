@@ -44,13 +44,13 @@ void ACaveControllerActor::LoadWallScreenConfig()
     // trying to load up Calibration json:
     FString CalibrationJson;
 
-    FString File = ConfigurationFile.FilePath;
+    FString File = this->ConfigurationFilePath.FilePath;
 
-    FString ConfigurationFilePath;
+    FString ConfigurationFileJustPath;
     FString ConfigurationFileName;
     FString ConfigurationFileExtension;
 
-    FPaths::Split(File, ConfigurationFilePath, ConfigurationFileName, ConfigurationFileExtension);
+    FPaths::Split(File, ConfigurationFileJustPath, ConfigurationFileName, ConfigurationFileExtension);
 
     FString FullPath = IFileManager::Get().ConvertToAbsolutePathForExternalAppForRead(*File);
 

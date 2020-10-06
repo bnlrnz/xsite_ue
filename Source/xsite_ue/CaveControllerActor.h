@@ -26,7 +26,10 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	FFilePath ConfigurationFile = {"Calibration.json"};
+	FFilePath ConfigurationFilePath = {"Calibration.json"};
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FDirectoryPath BlendTextureFolderPath = {""};
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
     FString VRPN_DEVICE = "DTrack";
