@@ -1,3 +1,24 @@
+/Binaries
+
+/DerivedDataCache
+
+/Intermediate
+
+/Saved
+
+/LinuxNoEditor
+
+*.sln
+
+*.sdf
+
+*.suo
+.idea/
+.kdev4/
+.vscode/
+Build/
+*.pro.user
+
 # Visual Studio 2015 user specific files
 .vs/
 
@@ -72,3 +93,75 @@ Plugins/*/Intermediate/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
+
+# C++ objects and libs
+*.slo
+*.lo
+*.o
+*.a
+*.la
+*.lai
+*.so
+*.dll
+*.dylib
+!libquat.a
+!libvrpn.a
+!quat.lib
+!vrpn.lib
+
+# Qt-es
+object_script.*.Release
+object_script.*.Debug
+*_plugin_import.cpp
+/.qmake.cache
+/.qmake.stash
+*.pro.user
+*.pro.user.*
+*.qbs.user
+*.qbs.user.*
+*.moc
+moc_*.cpp
+moc_*.h
+qrc_*.cpp
+ui_*.h
+*.qmlc
+*.jsc
+Makefile*
+*build-*
+
+# Qt unit tests
+target_wrapper.*
+
+# QtCreator
+*.autosave
+
+# QtCreator Qml
+*.qmlproject.user
+*.qmlproject.user.*
+
+# QtCreator CMake
+CMakeLists.txt.user*
+
+#cmake stuff
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+Testing
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+MakeLists.txt
+Makefile
+*.code-workspace
+*.kdev4
+*.pro
+*.workspace
+*CodeCompletionFolders.txt
+*CodeLitePreProcessor.txt
+*Config.pri
+*Defines.pri
+*Header.pri
+*Includes.pri
+*Source.pri
