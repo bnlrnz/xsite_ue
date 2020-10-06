@@ -3,11 +3,11 @@
 Unreal Engine Cave Plugin for Version 4.25. This works on Linux only for now because the plugin bundles VRPN   
 
 ## Installation
-Clone into Plugin-Folder of your Unreal Engine (V4.25) Project. Initialize and pull git lfs.
+Clone into Plugin folder of your Unreal Engine Project or add as submodule. Initialize and pull git lfs.
 
 ```Bash
-git clone git@github.com:bnlrnz/xsite_ue.git
-cd uecave
+git clone git@github.com:bnlrnz/xsite_ue.git or git submodule add git@github.com:bnlrnz/xsite_ue.git
+cd xsite_ue
 git lfs install
 git lfs pull
 ```
