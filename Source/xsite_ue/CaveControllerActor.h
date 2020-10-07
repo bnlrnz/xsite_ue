@@ -22,35 +22,14 @@ protected:
 	virtual void BeginPlay() override;
 
 public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FFilePath ConfigurationFilePath = {"Calibration.json"};
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FDirectoryPath BlendTextureFolderPath = {""};
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    FString VRPN_DEVICE = "DTrack";
-    
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    FString VRPN_HOST = "139.20.18.74";
-
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    FString VRPN_DEVICE_WII = "WiiMote0";
-
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    FString VRPN_HOST_WII = "127.0.0.1";
-
-    VRPNController* GetVRPNController();
-    VRPNController* GetVRPNWIIController();
-
     UPROPERTY()
     FVector EyeOrigin;
 private:
-    VRPNController* vrpnController = nullptr;
-    VRPNController* vrpnWiiController = nullptr;
-	
     void LoadWallScreenConfig();
 };

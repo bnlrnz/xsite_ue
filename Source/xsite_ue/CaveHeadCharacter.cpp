@@ -79,30 +79,31 @@ void ACaveHeadCharacter::BeginPlay()
 
     HeadOrigin = CaveController->EyeOrigin;
 
-    auto vrpnController = CaveController->GetVRPNController();
+    auto vrpnController = CaveGameInstance->GetVRPNControllerActor("DTrack")->GetController();
 
     if (vrpnController == nullptr)
     {
         UE_LOG(LogCave, Warning, TEXT("[ACaveHeadCharacter::BeginPlay] Could not obtain VrpnController from CaveController. Ignore this, if you don't use VRPN."));
-        return;
     }
+    else
+    {
+        vrpnController->AddTrackerChangedCallback(
+            [this, vrpnController](int32 sensor, VRPNController::TrackerData trackerData) {
+                if (sensor != 0)
+                    return;
 
-    vrpnController->AddTrackerChangedCallback(
-        [this, vrpnController](int32 sensor, VRPNController::TrackerData trackerData) {
-            if (sensor != 0)
-                return;
+                float xOffset = -HeadOrigin.X;
+                float yOffset = -HeadOrigin.Y;
+                float zOffset = -HeadOrigin.Z;
 
-            float xOffset = -HeadOrigin.X;
-            float yOffset = -HeadOrigin.Y;
-            float zOffset = -HeadOrigin.Z;
+                this->HeadOrigin = FVector(
+                    (float)(trackerData.Pos[1] + xOffset) * 100.f,
+                    (float)(trackerData.Pos[0] + yOffset) * 100.f,
+                    (float)(trackerData.Pos[2] + zOffset) * 100.f);
 
-            this->HeadOrigin = FVector(
-                (float)(trackerData.Pos[1] + xOffset) * 100.f,
-                (float)(trackerData.Pos[0] + yOffset) * 100.f,
-                (float)(trackerData.Pos[2] + zOffset) * 100.f);
-
-            this->HeadOrigin = this->GetController()->GetControlRotation().RotateVector(this->HeadOrigin);
-        });
+                this->HeadOrigin = this->GetController()->GetControlRotation().RotateVector(this->HeadOrigin);
+            });
+    }
 }
 
 void ACaveHeadCharacter::Tick(float DeltaTime)

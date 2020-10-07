@@ -5,18 +5,6 @@
 
 FString UCaveGameInstance::GetComputerName() { return FString(FPlatformProcess::ComputerName()); }
 
-bool UCaveGameInstance::IsMasterNode()
-{
-    if (GetWorld())
-    {
-        return GetWorld()->IsServer();
-    }
-    else
-    {
-        return false;
-    }
-}
-
 ACaveHeadCharacter *UCaveGameInstance::GetCaveHeadCharacter()
 {
     if (CachedCaveHeadCharacter != nullptr)
@@ -51,6 +39,30 @@ ACaveControllerActor *UCaveGameInstance::GetCaveController()
 
     return nullptr;
 }
+
+AVPRNControllerActor* UCaveGameInstance::GetVRPNControllerActor(const FString& DeviceName)
+{
+    if (!GetWorld()->IsServer())
+        return nullptr;
+
+    if (GetWorld())
+    {
+        for (TActorIterator<AVPRNControllerActor> CntrItr(GetWorld()); CntrItr; ++CntrItr)
+        {
+            auto *VPRNControllerActor = *CntrItr;
+            
+            if (VPRNControllerActor->VRPN_Device_Name.Compare(DeviceName) == 0)
+            {
+                return *CntrItr;
+            }
+        }
+    }
+
+    UE_LOG(LogCave, Error, TEXT("There is no VRPNControllerActor with name '%s'. Did you place and setup the VRPNControllerActor correctly?"), *DeviceName);
+
+    return nullptr;
+}
+
 
 void UCaveGameInstance::Cave_Shutdown()
 {
@@ -131,3 +143,4 @@ void UCaveGameInstance::Cave_SetBlendingAll(bool enabled)
 
     CaveHeadCharacter->Multicast_BlendingAll(enabled);
 }
+

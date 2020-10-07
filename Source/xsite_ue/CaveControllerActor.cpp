@@ -6,6 +6,7 @@
 #include "Serialization/JsonReader.h"
 #include "Serialization/JsonSerializer.h"
 #include "MultiViewportCameraActor.h"
+#include "VPRNControllerActor.h"
 #include "CaveGameInstance.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
@@ -28,15 +29,6 @@ void ACaveControllerActor::BeginPlay()
     Super::BeginPlay();
 
     LoadWallScreenConfig();
-}
-
-// Called every frame
-void ACaveControllerActor::Tick(float DeltaTime)
-{
-    Super::Tick(DeltaTime);
-
-    if (GetWorld()->IsServer())
-        GetVRPNController()->Poll();
 }
 
 void ACaveControllerActor::LoadWallScreenConfig()
@@ -248,30 +240,4 @@ void ACaveControllerActor::LoadWallScreenConfig()
             }
         }
     }
-}
-
-VRPNController *ACaveControllerActor::GetVRPNController()
-{
-
-    check(GetWorld()->IsServer());
-
-    if (this->vrpnController == nullptr)
-    {
-        this->vrpnController = new VRPNController(VRPN_DEVICE, VRPN_HOST, vrpn_DEFAULT_LISTEN_PORT_NO);
-    }
-
-    return this->vrpnController;
-}
-
-VRPNController *ACaveControllerActor::GetVRPNWIIController()
-{
-
-    check(GetWorld()->IsServer());
-
-    if (this->vrpnWiiController == nullptr)
-    {
-        this->vrpnWiiController = new VRPNController(VRPN_DEVICE_WII, VRPN_HOST, vrpn_DEFAULT_LISTEN_PORT_NO);
-    }
-
-    return this->vrpnWiiController;
 }

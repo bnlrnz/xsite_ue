@@ -79,7 +79,7 @@ void AVRPNFlystickActor::BeginPlay()
         return;
 
     auto CaveGameInstance = Cast<UCaveGameInstance>(GetWorld()->GetGameInstance());
-    auto vrpnController = CaveGameInstance->GetCaveController()->GetVRPNController();
+    auto vrpnController = CaveGameInstance->GetVRPNControllerActor("DTrack")->GetController();
 
     FVector EyeOrigin = FVector(0,0,0);
 
