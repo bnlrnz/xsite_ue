@@ -40,6 +40,10 @@ To display the plugins content (sources, materials, blueprints ...) in the "Cont
 
 ![](/Doc/set2.png)
 
+- Import Input Settings from [InputBackup.ini](https://github.com/bnlrnz/xsite_ue/blob/main/InputBackup.ini)
+
+![](Doc/input_setup.png)
+
 ## Getting started
 
 Add a **CaveControllerActor Blueprint** from the xsite_ue Content folder to the scene (the location is not important). Select the **CaveControllerActor** in the "World Outliner". Down in the "Details" Panel you will find a few things to set up the Controller:
