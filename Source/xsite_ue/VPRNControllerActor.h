@@ -32,5 +32,6 @@ public:
 
 	VRPNController* GetController();
 private:
+	UPROPERTY()
 	VRPNController* vrpnController = nullptr;
 };

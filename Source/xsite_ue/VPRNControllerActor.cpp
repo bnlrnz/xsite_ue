@@ -42,7 +42,8 @@ void AVPRNControllerActor::BeginDestroy()
 
 	if(vrpnController != nullptr)
 	{
-		delete vrpnController;
+		// this crashes --- but will leak otherwise...
+		//delete vrpnController;
 	}
 }
 
