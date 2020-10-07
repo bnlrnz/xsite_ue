@@ -63,13 +63,19 @@ void ACaveHeadCharacter::BeginPlay()
 
     auto CaveGameInstance = Cast<UCaveGameInstance>(GetWorld()->GetGameInstance());
 
+    if (!IsValid(CaveGameInstance))
+    {
+        UE_LOG(LogCave, Error, TEXT("[ACaveHeadCharacter::BeginPlay] Could not obtain CaveGameInstance from GameInstance. Make shure your Game Instance is set to CaveGameInstance in the project settings."));
+        return;
+    }
+
     auto CaveController = CaveGameInstance->GetCaveController();
 
     HeadOrigin = CaveGameInstance->GetCaveController()->EyeOrigin;
 
-    if (IsValid(CaveController))
+    if (!IsValid(CaveController))
     {
-        UE_LOG(LogCave, Warning, TEXT("[ACaveHeadCharacter::BeginPlay] Could not obtain CaveController from GameInstance. Make shure there is an instance of CaveController (e.g. Blueprint) in your scene."));
+        UE_LOG(LogCave, Error, TEXT("[ACaveHeadCharacter::BeginPlay] Could not obtain CaveController from GameInstance. Make shure there is an instance of CaveController (e.g. Blueprint) in your scene and set up."));
         return;
     }
 
