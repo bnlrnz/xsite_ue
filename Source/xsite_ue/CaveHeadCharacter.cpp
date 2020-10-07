@@ -71,19 +71,19 @@ void ACaveHeadCharacter::BeginPlay()
 
     auto CaveController = CaveGameInstance->GetCaveController();
 
-    HeadOrigin = CaveGameInstance->GetCaveController()->EyeOrigin;
-
     if (!IsValid(CaveController))
     {
         UE_LOG(LogCave, Error, TEXT("[ACaveHeadCharacter::BeginPlay] Could not obtain CaveController from GameInstance. Make shure there is an instance of CaveController (e.g. Blueprint) in your scene and set up."));
         return;
     }
 
+    HeadOrigin = CaveController->EyeOrigin;
+
     auto vrpnController = CaveController->GetVRPNController();
 
     if (vrpnController == nullptr)
     {
-        UE_LOG(LogCave, Warning, TEXT("[ACaveHeadCharacter::BeginPlay] Could not obtain VrpnController from CaveController or GameInstance"));
+        UE_LOG(LogCave, Warning, TEXT("[ACaveHeadCharacter::BeginPlay] Could not obtain VrpnController from CaveController. Ignore this, if you don't use VRPN."));
         return;
     }
 
