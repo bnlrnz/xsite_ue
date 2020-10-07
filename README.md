@@ -28,6 +28,10 @@ To display the plugins content (sources, materials, blueprints ...) in the Conte
 
 ![](/Doc/set1.png)
 
+- Select "CaveGameInstance" as Game Instance in the Project - Maps & Modes
+
+![](/Doc/GameInstance.png)
+
 - Select "CaveGameModeBase" as Default GameMode in the Project - Maps & Modes
 
 ![](/Doc/set2.png)
