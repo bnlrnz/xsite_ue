@@ -2,6 +2,9 @@
 
 Unreal Engine Cave Plugin for Version 4.25.
 
+## Demo Application
+You can find a preconfigured demo project here: [xsite_ue_example](https://github.com/bnlrnz/xsite_ue_example)
+
 ## Dependencies
 This works on Linux only for now because the plugin bundles [VRPN](https://github.com/vrpn/vrpn) precompiled for Linux. This should be easily replaceable with the Windows version. Make shure to compile VRPN with the same compiler as Unreal Engine. 
 
@@ -37,6 +40,10 @@ To display the plugins content (sources, materials, blueprints ...) in the "Cont
 
 ![](/Doc/set2.png)
 
+- Import Input Settings from [InputBackup.ini](https://github.com/bnlrnz/xsite_ue/blob/main/InputBackup.ini)
+
+![](Doc/input_setup.png)
+
 ## Getting started
 
 Add a **CaveControllerActor Blueprint** from the xsite_ue Content folder to the scene (the location is not important). Select the **CaveControllerActor** in the "World Outliner". Down in the "Details" Panel you will find a few things to set up the Controller:
@@ -46,4 +53,4 @@ Add a **CaveControllerActor Blueprint** from the xsite_ue Content folder to the 
 
 Since multiple instances of Unreal Projects will share the Configuration and the Blend/Alpha textures, they should be situated somewhere outside the projects folders.
 
-
+Disable **Temporal Anti-Aliasing** (you can choose "None" or any other AA method) and **Motion Blur** in the project settings. These effect don't work properly!
