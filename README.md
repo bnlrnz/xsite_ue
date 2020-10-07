@@ -49,4 +49,4 @@ Add a **CaveControllerActor Blueprint** from the xsite_ue Content folder to the 
 
 Since multiple instances of Unreal Projects will share the Configuration and the Blend/Alpha textures, they should be situated somewhere outside the projects folders.
 
-
+Disable **Temporal Anti-Aliasing** (you can choose "None" or any other AA method) and **Motion Blur** in the project settings. These effect don't work properly!
