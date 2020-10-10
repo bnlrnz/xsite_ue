@@ -13,6 +13,8 @@
 
 #include "Containers/HashTable.h"
 
+#include "VRPNController.generated.h"
+
 #define ANALOG_CHANNELS 2 // we only need 2 channels for our flystick
 
 UENUM(BlueprintType)
@@ -22,8 +24,11 @@ enum ButtonState
     Released = 0
 };
 
-class VRPNController
+UCLASS()
+class UVRPNController : public UObject
 {
+    GENERATED_BODY()
+    
 public:
     typedef struct _TrackerData
     {
@@ -38,7 +43,7 @@ public:
     } AnalogData;
 
     // stores the recently received data
-    TMap<int32, VRPNController::TrackerData> TrackerDataMap;
+    TMap<int32, UVRPNController::TrackerData> TrackerDataMap;
     TMap<int32, ButtonState> ButtonDataMap;
     AnalogData AnalogDataField{};
 
@@ -53,6 +58,9 @@ public:
     FCriticalSection m_mutex;
 
 private:
+    // this is requiered by UObject/GENERATED_BODY, don't use it
+    UVRPNController(){};
+    
     // triggered when new data arrives
     TArray<TFunction<void(int32, TrackerData)>> OnTrackerChangedCallbacks;
     TArray<TFunction<void(int32, ButtonState)>> OnButtonPressedCallbacks;
@@ -65,10 +73,13 @@ private:
     vrpn_Analog_Remote *analog = nullptr;
 
 public:
-    VRPNController(const FString &Device, const FString &HostIP, uint32 Port = vrpn_DEFAULT_LISTEN_PORT_NO);
-
+    // use this to create a controller!
+    static UVRPNController* Create(const FString &Device, const FString &HostIP, uint32 Port = vrpn_DEFAULT_LISTEN_PORT_NO);
+    
+    void Init(const FString &Device, const FString &HostIP, uint32 Port = vrpn_DEFAULT_LISTEN_PORT_NO);
+    
     // run this whenever a new tracker value is needed, e.g. in the Tick Method, then access the value by the TrackerDataMap
     void Poll();
 
-    ~VRPNController();
+    ~UVRPNController();
 };

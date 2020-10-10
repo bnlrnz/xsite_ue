@@ -31,8 +31,14 @@ public class xsite_ue : ModuleRules
             PublicAdditionalLibraries.Add(Path.Combine(ModuleDirectory, "lib", "vrpn.lib"));
             PublicAdditionalLibraries.Add(Path.Combine(ModuleDirectory, "lib", "quat.lib"));
         }
+        else if (Target.Platform == UnrealTargetPlatform.Mac)
+        {
+            PublicAdditionalLibraries.Add(Path.Combine(ModuleDirectory, "lib", "libvrpn_mac.a")); 
+            PublicAdditionalLibraries.Add(Path.Combine(ModuleDirectory, "lib", "libquat_mac.a"));
+        }
         else
         {
+        	// Linux
             PublicAdditionalLibraries.Add(Path.Combine(ModuleDirectory, "lib", "libvrpn.a")); 
             PublicAdditionalLibraries.Add(Path.Combine(ModuleDirectory, "lib", "libquat.a"));
         }

@@ -13,7 +13,7 @@ AVPRNControllerActor::AVPRNControllerActor()
 	// this is only needed on server
 	SetReplicates(false);
 
-	vrpnController = new VRPNController(VRPN_Device_Name, VRPN_Host_IP, vrpn_DEFAULT_LISTEN_PORT_NO);
+	vrpnController = UVRPNController::Create(VRPN_Device_Name, VRPN_Host_IP, vrpn_DEFAULT_LISTEN_PORT_NO);
 }
 
 // Called when the game starts or when spawned
@@ -31,7 +31,7 @@ void AVPRNControllerActor::Tick(float DeltaTime)
         vrpnController->Poll();
 }
 
-VRPNController* AVPRNControllerActor::GetController()
+UVRPNController* AVPRNControllerActor::GetController()
 {
 	return vrpnController;
 }

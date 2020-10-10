@@ -95,7 +95,7 @@ void AVRPNFlystickActor::BeginPlay()
     }
 
     vrpnController->AddTrackerChangedCallback(
-        [this, vrpnController, EyeOrigin](int32 sensor, VRPNController::TrackerData trackerData) {
+        [this, vrpnController, EyeOrigin](int32 sensor, UVRPNController::TrackerData trackerData) {
             //UE_LOG(LogCave, Warning, TEXT("Tracker ID: %d"), sensor);
             // 18 = Flystick, 15 = WiiTarget aka Flystick substitute
             if (sensor != 18 && sensor != 15)
@@ -170,7 +170,7 @@ void AVRPNFlystickActor::BeginPlay()
         });
 
     vrpnController->AddAnalogChangedCallback(
-        [this, vrpnController](VRPNController::AnalogData analogData) {
+        [this, vrpnController](UVRPNController::AnalogData analogData) {
             //TODO: we got exactly two channels, nonetheless this should be more generic
             this->AnalogX = analogData.Channel[0]; // left right
             this->AnalogY = analogData.Channel[1]; // up down

@@ -10,7 +10,7 @@ void VRPN_CALLBACK handle_dtrack_tracker(void *userData, const vrpn_TRACKERCB da
 {
     if (userData == nullptr)
         return;
-    VRPNController::TrackerData trackerData;
+    UVRPNController::TrackerData trackerData;
     trackerData.Pos[0] = data.pos[0];
     trackerData.Pos[1] = data.pos[1];
     trackerData.Pos[2] = data.pos[2];
@@ -19,7 +19,7 @@ void VRPN_CALLBACK handle_dtrack_tracker(void *userData, const vrpn_TRACKERCB da
     trackerData.Quat[2] = data.quat[2];
     trackerData.Quat[3] = data.quat[3];
 
-    auto *thisptr = (VRPNController *)userData;
+    auto *thisptr = (UVRPNController *)userData;
 
     // store recent data
     thisptr->TrackerDataMap.Add(data.sensor, trackerData);
@@ -40,7 +40,7 @@ void VRPN_CALLBACK handle_dtrack_analog(void *userData, const vrpn_ANALOGCB data
     if (userData == nullptr)
         return;
 
-    auto *thisptr = (VRPNController *)userData;
+    auto *thisptr = (UVRPNController *)userData;
 
     // store recent data
     thisptr->AnalogDataField.NumChannels = data.num_channel;
@@ -64,7 +64,7 @@ void VRPN_CALLBACK handle_dtrack_button(void *userData, const vrpn_BUTTONCB data
     if (userData == nullptr)
         return;
 
-    auto *thisptr = (VRPNController *)userData;
+    auto *thisptr = (UVRPNController *)userData;
 
     // store recent data
     thisptr->ButtonDataMap.Add(data.button, data.state == 1 ? ButtonState::Pressed : ButtonState::Released);
@@ -78,7 +78,13 @@ void VRPN_CALLBACK handle_dtrack_button(void *userData, const vrpn_BUTTONCB data
     thisptr->m_mutex.Unlock();
 }
 
-VRPNController::VRPNController(const FString &Device, const FString &HostIP, uint32 Port)
+UVRPNController* UVRPNController::Create(const FString &Device, const FString &HostIP, uint32 Port){
+    UVRPNController* Controller = NewObject<UVRPNController>();
+    Controller->Init(Device, HostIP, Port);
+    return Controller;
+}
+
+void UVRPNController::Init(const FString &Device, const FString &HostIP, uint32 Port)
 {
     //UE_LOG(LogCave, Warning, TEXT("VRPNController connecting..."));
 
@@ -102,7 +108,7 @@ VRPNController::VRPNController(const FString &Device, const FString &HostIP, uin
     this->button->register_change_handler(this, handle_dtrack_button);
 }
 
-void VRPNController::Poll()
+void UVRPNController::Poll()
 {
     if (tracker)
         tracker->mainloop();
@@ -120,43 +126,43 @@ void VRPNController::Poll()
     //vrpn_SleepMsecs(20);
 }
 
-void VRPNController::AddTrackerChangedCallback(const TFunction<void(int32, TrackerData)> &Callback)
+void UVRPNController::AddTrackerChangedCallback(const TFunction<void(int32, TrackerData)> &Callback)
 {
     m_mutex.Lock();
     this->OnTrackerChangedCallbacks.Add(Callback);
     m_mutex.Unlock();
 }
 
-void VRPNController::AddButtonPressedCallback(const TFunction<void(int32, ButtonState)> &Callback)
+void UVRPNController::AddButtonPressedCallback(const TFunction<void(int32, ButtonState)> &Callback)
 {
     m_mutex.Lock();
     this->OnButtonPressedCallbacks.Add(Callback);
     m_mutex.Unlock();
 }
 
-void VRPNController::AddAnalogChangedCallback(const TFunction<void(AnalogData)> &Callback)
+void UVRPNController::AddAnalogChangedCallback(const TFunction<void(AnalogData)> &Callback)
 {
     m_mutex.Lock();
     this->OnAnalogChangedCallbacks.Add(Callback);
     m_mutex.Unlock();
 }
 
-const TArray<TFunction<void(int32, VRPNController::TrackerData)>> &VRPNController::GetTrackerChangedCallbacks()
+const TArray<TFunction<void(int32, UVRPNController::TrackerData)>> &UVRPNController::GetTrackerChangedCallbacks()
 {
     return this->OnTrackerChangedCallbacks;
 }
 
-const TArray<TFunction<void(int32, ButtonState)>> &VRPNController::GetButtonPressedCallbacks()
+const TArray<TFunction<void(int32, ButtonState)>> &UVRPNController::GetButtonPressedCallbacks()
 {
     return this->OnButtonPressedCallbacks;
 }
 
-const TArray<TFunction<void(VRPNController::AnalogData)>> &VRPNController::GetAnalogChangedCallbacks()
+const TArray<TFunction<void(UVRPNController::AnalogData)>> &UVRPNController::GetAnalogChangedCallbacks()
 {
     return this->OnAnalogChangedCallbacks;
 }
 
-VRPNController::~VRPNController()
+UVRPNController::~UVRPNController()
 {
     //UE_LOG(LogCave, Warning, TEXT("VRPNController destruction"));
 

@@ -30,8 +30,8 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	VRPNController* GetController();
+    UVRPNController* GetController();
 private:
 	UPROPERTY()
-	VRPNController* vrpnController = nullptr;
+    UVRPNController* vrpnController = nullptr;
 };

@@ -62,6 +62,9 @@ Build/
 *.VC.db
 *.VC.opendb
 
+# Mac Stuff
+.DS_Store
+
 # Precompiled Assets
 SourceArt/**/*.png
 SourceArt/**/*.tga
