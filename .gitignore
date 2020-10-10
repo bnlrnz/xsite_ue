@@ -107,8 +107,12 @@ DerivedDataCache/*
 *.so
 *.dll
 *.dylib
+
+# these are specially bundled with our source
 !libquat.a
 !libvrpn.a
+!libquat_mac.a
+!libvrpn_mac.a
 !quat.lib
 !vrpn.lib
 
