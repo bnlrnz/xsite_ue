@@ -35,15 +35,3 @@ UVRPNController* AVPRNControllerActor::GetController()
 {
 	return vrpnController;
 }
-
-void AVPRNControllerActor::BeginDestroy()
-{
-	Super::BeginDestroy();
-
-	if(vrpnController != nullptr)
-	{
-		// this crashes --- but will leak otherwise...
-		//delete vrpnController;
-	}
-}
-
