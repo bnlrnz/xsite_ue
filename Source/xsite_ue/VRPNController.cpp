@@ -173,20 +173,26 @@ UVRPNController::~UVRPNController()
 
     OnTrackerChangedCallbacks.Empty();
 
+    //TODO: I should delete these... bit it crashes
+    return;
     if (this->tracker != nullptr)
     {
         delete (this->tracker);
+        this->tracker = nullptr;
     }
     if (this->button != nullptr)
     {
         delete (this->button);
+        this->button = nullptr;
     }
     if (this->analog != nullptr)
     {
         delete (this->analog);
+        this->analog = nullptr;
     }
     if (this->connection != nullptr)
     {
         delete (this->connection);
+        this->connection = nullptr;
     }
 }
