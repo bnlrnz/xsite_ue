@@ -5,9 +5,6 @@ Unreal Engine Cave Plugin for Unreal Engine Version 4.25.3 (4.25.0-4.25.2 or new
 ## Demo Application
 You can find a preconfigured demo project here: [xsite_ue_example](https://github.com/bnlrnz/xsite_ue_example)
 
-## Dependencies
-This works on Linux only for now because the plugin bundles [VRPN](https://github.com/vrpn/vrpn) precompiled for Linux. This should be easily replaceable with the Windows version. Make shure to compile VRPN with the same compiler as Unreal Engine. 
-
 ## Installation
 Clone into "Plugins" folder (if it is not there, create it in your project root) of your Unreal Engine Project or add as submodule. Initialize and pull git lfs.
 
