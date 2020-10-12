@@ -1,6 +1,6 @@
 # xsite_ue
 
-Unreal Engine Cave Plugin for Version 4.25.
+Unreal Engine Cave Plugin for Unreal Engine Version 4.25.3 (4.25.0-4.25.2 or newer versions may or may not work...)
 
 ## Demo Application
 You can find a preconfigured demo project here: [xsite_ue_example](https://github.com/bnlrnz/xsite_ue_example)
