@@ -6,7 +6,7 @@
 #include "Serialization/JsonReader.h"
 #include "Serialization/JsonSerializer.h"
 #include "MultiViewportCameraActor.h"
-#include "VPRNControllerActor.h"
+#include "VRPNControllerActor.h"
 #include "CaveGameInstance.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"

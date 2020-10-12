@@ -40,18 +40,18 @@ ACaveControllerActor *UCaveGameInstance::GetCaveController()
     return nullptr;
 }
 
-AVPRNControllerActor* UCaveGameInstance::GetVRPNControllerActor(const FString& DeviceName)
+AVRPNControllerActor* UCaveGameInstance::GetVRPNControllerActor(const FString& DeviceName)
 {
     if (!GetWorld()->IsServer())
         return nullptr;
 
     if (GetWorld())
     {
-        for (TActorIterator<AVPRNControllerActor> CntrItr(GetWorld()); CntrItr; ++CntrItr)
+        for (TActorIterator<AVRPNControllerActor> CntrItr(GetWorld()); CntrItr; ++CntrItr)
         {
-            auto *VPRNControllerActor = *CntrItr;
+            auto *VRPNControllerActor = *CntrItr;
             
-            if (VPRNControllerActor->VRPN_Device_Name.Compare(DeviceName) == 0)
+            if (VRPNControllerActor->VRPN_Device_Name.Compare(DeviceName) == 0)
             {
                 return *CntrItr;
             }

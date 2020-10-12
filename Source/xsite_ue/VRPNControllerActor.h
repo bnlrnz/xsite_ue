@@ -5,16 +5,16 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "VRPNController.h"
-#include "VPRNControllerActor.generated.h"
+#include "VRPNControllerActor.generated.h"
 
 UCLASS()
-class XSITE_UE_API AVPRNControllerActor : public AActor
+class XSITE_UE_API AVRPNControllerActor : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	AVPRNControllerActor();
+	AVRPNControllerActor();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
     FString VRPN_Device_Name = "DTrack";
@@ -22,15 +22,13 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
     FString VRPN_Host_IP = "139.20.18.74";
 protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-    UVRPNController* GetController();
+    VRPNController* GetController();
 private:
-	UPROPERTY()
-    UVRPNController* vrpnController = nullptr;
+    VRPNController* vrpnController = nullptr;
 };

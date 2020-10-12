@@ -23,7 +23,7 @@ public:
     ACaveControllerActor* GetCaveController();
 
     UFUNCTION(BlueprintCallable)
-    AVPRNControllerActor* GetVRPNControllerActor(const FString& DeviceName);
+    AVRPNControllerActor* GetVRPNControllerActor(const FString& DeviceName);
 
     /*console command to execute console commands on server and clients*/
     UFUNCTION(Exec, Category = Cave)

@@ -88,7 +88,7 @@ void ACaveHeadCharacter::BeginPlay()
     else
     {
         vrpnController->AddTrackerChangedCallback(
-            [this, vrpnController](int32 sensor, UVRPNController::TrackerData trackerData) {
+            [this, vrpnController](int32 sensor, VRPNController::TrackerData trackerData) {
                 if (sensor != 0)
                     return;
 
