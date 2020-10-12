@@ -480,9 +480,9 @@ void AMultiViewportCameraActor::Tick(float delta)
     // CamManager->SetViewTarget(oldTarget);
 }
 
-void AMultiViewportCameraActor::BeginDestroy()
+void AMultiViewportCameraActor::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
-    Super::BeginDestroy();
+    Super::EndPlay(EndPlayReason);
 
     if (!bEnabledScreen)
         return;

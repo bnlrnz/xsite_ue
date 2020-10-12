@@ -128,9 +128,8 @@ private:
     bool bWarpingEnabled = true;
     bool bBlendingEnabled = true;
 
-    void BeginDestroy() override;
-
     void BeginPlay() override;
+    void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
     void Tick(float delta) override;
 
