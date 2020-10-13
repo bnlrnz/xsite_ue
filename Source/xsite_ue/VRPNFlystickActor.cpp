@@ -343,21 +343,23 @@ void AVRPNFlystickActor::HandleNavigate()
     // forwards/backwards
     if (this->AnalogY != 0.0f)
     {
+        // UE_LOG(LogCave, Warning, TEXT("AnalogY: %f"), this->AnalogY);        
         FVector Direction = (this->End - this->Start);
         Direction = Direction / Direction.Size();
         this->CaveHeadCharacter->SetActorLocation(
-            this->CaveHeadCharacter->NetLoc +
+            this->CaveHeadCharacter->GetActorLocation() +
             Direction * this->AnalogY * MoveSpeed.GetValueOnGameThread());
     }
 
     // strafe
     if (this->AnalogX != 0.0f)
     {
+        // UE_LOG(LogCave, Warning, TEXT("AnalogX: %f"), this->AnalogX);
         FVector Direction = (this->End - this->Start);
         Direction = FVector::CrossProduct(Direction, FVector::UpVector);
         Direction = Direction / Direction.Size();
         this->CaveHeadCharacter->SetActorLocation(
-            this->CaveHeadCharacter->NetLoc +
+            this->CaveHeadCharacter->GetActorLocation() +
             Direction * -this->AnalogX * MoveSpeed.GetValueOnGameThread());
     }
 

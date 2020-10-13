@@ -161,7 +161,23 @@ void ACaveHeadCharacter::SetupPlayerInputComponent(UInputComponent *PlayerInputC
 
 void ACaveHeadCharacter::ResetHead()
 {
-    SetActorLocation(HeadOrigin);
+    auto CaveGameInstance = Cast<UCaveGameInstance>(GetWorld()->GetGameInstance());
+
+    if (!IsValid(CaveGameInstance))
+    {
+        UE_LOG(LogCave, Error, TEXT("[ACaveHeadCharacter::ResetHead] Could not obtain CaveGameInstance from GameInstance. Make shure your Game Instance is set to CaveGameInstance in the project settings."));
+        return;
+    }
+
+    auto CaveController = CaveGameInstance->GetCaveController();
+
+    if (!IsValid(CaveController))
+    {
+        UE_LOG(LogCave, Error, TEXT("[ACaveHeadCharacter::ResetHead] Could not obtain CaveController from GameInstance. Make shure there is an instance of CaveController (e.g. Blueprint) in your scene and set up."));
+        return;
+    }
+
+    SetActorLocation(CaveController->EyeOrigin);
 
     auto *PlayerController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 
