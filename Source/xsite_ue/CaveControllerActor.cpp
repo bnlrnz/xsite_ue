@@ -89,6 +89,7 @@ void ACaveControllerActor::LoadWallScreenConfig()
     }else
     {
         EyeOrigin = FVector(-CalibrationData.eye[2], CalibrationData.eye[0], CalibrationData.eye[1]);
+        EyeOrigin = EyeOrigin * UE_SCALE_FACTOR;
     }
     
     if (CalibrationData.walls.Num() == 0)
