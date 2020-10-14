@@ -79,7 +79,15 @@ void ACaveHeadCharacter::BeginPlay()
 
     HeadOrigin = CaveController->EyeOrigin;
 
-    auto vrpnController = CaveGameInstance->GetVRPNControllerActor("DTrack")->GetController();
+    auto vrpnControllerActor = CaveGameInstance->GetVRPNControllerActor("DTrack");
+
+    if (!IsValid(vrpnControllerActor))
+    {
+        UE_LOG(LogCave, Error, TEXT("[ACaveHeadCharacter::BeginPlay] Could not obtain VrpnControllerActor '%s' from GameInstance. Skipping..."), TEXT("DTRACK"));
+        return;
+    }
+    
+    auto vrpnController = vrpnControllerActor->GetController();
 
     if (vrpnController == nullptr)
     {
