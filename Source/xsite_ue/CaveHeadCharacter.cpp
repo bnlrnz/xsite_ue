@@ -215,9 +215,9 @@ void ACaveHeadCharacter::Multicast_ExecuteCommand_Implementation(const FString &
 
 void ACaveHeadCharacter::Multicast_ToggleGhost_Implementation()
 {
-    auto *CharacterMovement = GetCharacterMovement();
+    auto *CharacterMovementPtr = GetCharacterMovement();
 
-    if (CharacterMovement == nullptr)
+    if (CharacterMovementPtr == nullptr)
     {
         return;
     }
@@ -228,9 +228,9 @@ void ACaveHeadCharacter::Multicast_ToggleGhost_Implementation()
         bIsGhost = false;
 
         // normal mode
-        CharacterMovement->StopMovementImmediately();
-        CharacterMovement->SetMovementMode(EMovementMode::MOVE_Walking);
-        CharacterMovement->bCheatFlying = false;
+        CharacterMovementPtr->StopMovementImmediately();
+        CharacterMovementPtr->SetMovementMode(EMovementMode::MOVE_Walking);
+        CharacterMovementPtr->bCheatFlying = false;
         SetActorEnableCollision(true);
     }
     else
@@ -239,9 +239,9 @@ void ACaveHeadCharacter::Multicast_ToggleGhost_Implementation()
         bIsGhost = true;
 
         // ghost mode
-        CharacterMovement->StopMovementImmediately();
-        CharacterMovement->SetMovementMode(EMovementMode::MOVE_Flying);
-        CharacterMovement->bCheatFlying = true;
+        CharacterMovementPtr->StopMovementImmediately();
+        CharacterMovementPtr->SetMovementMode(EMovementMode::MOVE_Flying);
+        CharacterMovementPtr->bCheatFlying = true;
         SetActorEnableCollision(false);
     }
 }
