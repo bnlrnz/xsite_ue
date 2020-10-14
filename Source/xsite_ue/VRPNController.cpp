@@ -161,11 +161,19 @@ VRPNController::~VRPNController()
     //UE_LOG(LogCave, Warning, TEXT("VRPNController destruction"));
 
     for (auto f : OnTrackerChangedCallbacks)
-    {
         f = nullptr;
-    }
 
     OnTrackerChangedCallbacks.Empty();
+
+    for (auto f : OnAnalogChangedCallbacks)
+        f = nullptr;
+
+    OnAnalogChangedCallbacks.Empty();
+
+    for (auto f : OnButtonPressedCallbacks)
+        f = nullptr;
+    
+    OnButtonPressedCallbacks.Empty();
 
     if (this->tracker != nullptr)
     {

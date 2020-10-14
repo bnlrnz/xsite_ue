@@ -33,6 +33,8 @@ void ACaveControllerActor::BeginPlay()
 
 void ACaveControllerActor::LoadWallScreenConfig()
 {
+    UE_LOG(LogCave, Warning, TEXT("Trying to load Cave configuration for %s"), FPlatformProcess::ComputerName());
+
     // trying to load up Calibration json:
     FString CalibrationJson;
 

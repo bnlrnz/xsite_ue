@@ -71,7 +71,7 @@ void AMultiViewportCameraActor::BeginPlay()
 {
     // check whether we should spawn this screen on the current machine
     bEnabledScreen =
-        CaveGameInstance->GetComputerName().Equals(this->ClientName) || this->ClientName.Equals("AllClients") ||
+        CaveGameInstance->GetComputerName().ToLower().Equals(this->ClientName.ToLower()) || this->ClientName.Equals("AllClients") ||
         this->ClientName.Equals("*");
 
     // remove screen mesh from scene, we dont need it anymore

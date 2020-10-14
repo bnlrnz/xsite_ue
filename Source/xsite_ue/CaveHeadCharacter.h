@@ -39,25 +39,25 @@ public:
     UFUNCTION(NetMulticast, Reliable)
     void Multicast_ExecuteCommand(const FString &Command);
 
-    UFUNCTION(NetMulticast, unreliable)
+    UFUNCTION(NetMulticast, Reliable)
     void Multicast_IdentifyScreen();
 
-    UFUNCTION(NetMulticast, unreliable)
+    UFUNCTION(NetMulticast, Reliable)
     void Multicast_Warping(const FString &hostname, bool enabled);
 
-    UFUNCTION(NetMulticast, unreliable)
+    UFUNCTION(NetMulticast, Reliable)
     void Multicast_Blending(const FString &hostname, bool enabled);
 
-    UFUNCTION(NetMulticast, unreliable)
+    UFUNCTION(NetMulticast, Reliable)
     void Multicast_WarpingAll(bool enabled);
 
-    UFUNCTION(NetMulticast, unreliable)
+    UFUNCTION(NetMulticast, Reliable)
     void Multicast_BlendingAll(bool enabled);
 
-    UFUNCTION(NetMulticast, unreliable)
+    UFUNCTION(NetMulticast, Reliable)
     void Multicast_IdentifyScreenClear();
 
-    UFUNCTION(NetMulticast, unreliable)
+    UFUNCTION(NetMulticast, Reliable)
     void Multicast_ExitGame();
 
     void ExitGame();

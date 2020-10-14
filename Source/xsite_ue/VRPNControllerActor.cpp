@@ -19,7 +19,8 @@ void AVRPNControllerActor::BeginPlay()
 {
 	Super::BeginPlay();
 
-	vrpnController = new VRPNController(VRPN_Device_Name, VRPN_Host_IP, vrpn_DEFAULT_LISTEN_PORT_NO);
+	if (GetWorld()->IsServer() && vrpnController == nullptr)
+		vrpnController = new VRPNController(VRPN_Device_Name, VRPN_Host_IP, vrpn_DEFAULT_LISTEN_PORT_NO);
 }
 
 // Called every frame
