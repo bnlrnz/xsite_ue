@@ -110,7 +110,11 @@ void ACaveControllerActor::LoadWallScreenConfig()
         {
             UE_LOG(LogCave, Display, TEXT("Found Client %s-%d for wall %s"), *Client.name, Client.id, *Wall.name);
 
-            if (CaveGameInstance != nullptr && !CaveGameInstance->GetComputerName().ToLower().Equals(Client.name.ToLower()))
+            // Check if we are on the correct client
+            if (CaveGameInstance != nullptr &&
+               !CaveGameInstance->GetComputerName().ToLower().Equals(Client.name.ToLower()) &&
+               !Client.name.Equals(FString("AllClients")) &&
+               !Client.name.Equals("*"))
             {
                 UE_LOG(LogCave, Display, TEXT("Skipping Client... not my business"));
                 continue;

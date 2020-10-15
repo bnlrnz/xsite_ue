@@ -69,9 +69,13 @@ void AMultiViewportCameraActor::PreInitializeComponents()
 // Called when the game starts or when spawned
 void AMultiViewportCameraActor::BeginPlay()
 {
+    // This shouldn't be reached in the first place if we are on the wrong client/computer
     // check whether we should spawn this screen on the current machine
+    // AMultiViewportCameraActor should only be spawned on the correct clients,
+    // Look at CaveController.cpp, there is almost the same statement
     bEnabledScreen =
-        CaveGameInstance->GetComputerName().ToLower().Equals(this->ClientName.ToLower()) || this->ClientName.Equals("AllClients") ||
+        CaveGameInstance->GetComputerName().ToLower().Equals(this->ClientName.ToLower()) || 
+        this->ClientName.Equals(FString("AllClients")) ||
         this->ClientName.Equals("*");
 
     // remove screen mesh from scene, we dont need it anymore
