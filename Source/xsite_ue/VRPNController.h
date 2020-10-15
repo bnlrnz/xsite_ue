@@ -5,11 +5,13 @@
 #include "CoreMinimal.h"
 #include "xsite_ue.h"
 
+#if PLATFORM_WINDOWS
 // put this at the top of your .h file above #includes
 // UE4: allow Windows platform types to avoid naming collisions
 // must be undone at the bottom of this file!
 #include "Windows/AllowWindowsPlatformTypes.h"
 #include "Windows/PreWindowsApi.h"
+#endif
 
 #include "include/vrpn_Connection.h" // for vrpn_Connection, etc
 #include "include/vrpn_Shared.h"     // for vrpn_SleepMsecs
@@ -79,8 +81,10 @@ public:
     ~VRPNController();
 };
 
+#if PLATFORM_WINDOWS
 // put this at the bottom of the .h file
 // UE4: disallow windows platform types
 // this was enabled at the top of the file
 #include "Windows/PostWindowsApi.h"
 #include "Windows/HideWindowsPlatformTypes.h"
+#endif
