@@ -378,6 +378,8 @@ void AVRPNFlystickActor::HandleNavigate()
     }
 
     // rotate
+    this->CaveHeadCharacter->NetRot = this->DragStartRotation - Direction.Rotation() + this->CaveHeadCharacterStartRotation;
+
     this->CaveHeadCharacter->GetController()->SetControlRotation(
         this->DragStartRotation - Direction.Rotation() + this->CaveHeadCharacterStartRotation);
 
