@@ -202,8 +202,17 @@ void AMultiViewportCameraActor::BeginPlay()
 
     UE_LOG(LogCave, Display, TEXT("[%s] Spawning Extra Window resolution: %s offset: %s"), *WindowTitle.ToString(), *InitialWindowRes.ToString(), *InitialWindowPos.ToString());
 
-    IdentifyScreen();
-       
+    // IdentifyScreen();
+    
+    // this enables Hierarchical Z-Buffer Occlusion (see https://docs.unrealengine.com/en-US/Engine/Rendering/VisibilityCulling/index.html)
+    // we do this method to prevent flickering actors (static meshes) caused by aggressive default frustum/occlusion culling
+    // whenever an extra window is spawn (with a seperate view frustum than the "main" window) we should make shure to activate this
+    // we could also set r.AllowOcclusionQueries=0, but this would probably disable culling all together (which we do not want?)
+    if (this->PlayerController)
+    {
+        this->PlayerController->ConsoleCommand("r.HZBOcclusion 1");
+    }
+
     // initialize everything before we call base class so that in blueprint beginplay everything is ready
     Super::BeginPlay();
 }
