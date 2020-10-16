@@ -24,5 +24,6 @@ private:
     FMatrix GenerateOffAxisMatrix(const AMultiViewportCameraActor *Actor);
 
     //mapping cached view matrices to specific screen name
+    UPROPERTY()
     TMap<FString, FMatrix> CachedViewMatrices;
 };

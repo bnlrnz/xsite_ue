@@ -49,6 +49,7 @@ public:
     AVRPNFlystickActor *Flystick = nullptr;
 
 private:
+    UPROPERTY()
     ACaveHeadCharacter *CaveHeadCharacter = nullptr;
 
     FVector TossStart = FVector(0, 0, 0);

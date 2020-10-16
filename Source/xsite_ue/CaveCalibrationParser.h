@@ -210,7 +210,7 @@ struct FCalibrationData{
 class CaveCalibrationParser
 {
 public:
-	static bool ParseJsonString(FString JsonString, FCalibrationData* CalibrationData);
+	static bool ParseJsonString(const FString& JsonString, FCalibrationData* CalibrationData);
 private:
 	CaveCalibrationParser(){};
 	~CaveCalibrationParser(){};

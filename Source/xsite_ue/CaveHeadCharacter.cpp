@@ -89,7 +89,7 @@ void ACaveHeadCharacter::BeginPlay()
     
     auto vrpnController = vrpnControllerActor->GetController();
 
-    if (vrpnController == nullptr)
+    if (vrpnController)
     {
         UE_LOG(LogCave, Warning, TEXT("[ACaveHeadCharacter::BeginPlay] Could not obtain VrpnController from CaveController. Ignore this, if you don't use VRPN."));
     }

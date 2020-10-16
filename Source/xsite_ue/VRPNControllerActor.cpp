@@ -19,8 +19,10 @@ void AVRPNControllerActor::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (GetWorld()->IsServer() && vrpnController == nullptr)
-		vrpnController = new VRPNController(VRPN_Device_Name, VRPN_Host_IP, vrpn_DEFAULT_LISTEN_PORT_NO);
+	if (GetWorld()->IsServer() && vrpnController == nullptr) {
+		vrpnController = MakeShareable(new VRPNController());
+		vrpnController->Init(VRPN_Device_Name, VRPN_Host_IP, vrpn_DEFAULT_LISTEN_PORT_NO);
+	}
 }
 
 // Called every frame
@@ -32,7 +34,7 @@ void AVRPNControllerActor::Tick(float DeltaTime)
         vrpnController->Poll();
 }
 
-VRPNController* AVRPNControllerActor::GetController()
+TSharedPtr<VRPNController> AVRPNControllerActor::GetController()
 {
 	return vrpnController;
 }
@@ -44,6 +46,6 @@ void AVRPNControllerActor::EndPlay(const EEndPlayReason::Type EndPlayReason)
 	
 	if (vrpnController != nullptr)
 	{
-		delete vrpnController;
+		vrpnController.Reset();
 	}
 }

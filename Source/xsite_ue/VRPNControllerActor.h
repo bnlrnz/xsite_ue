@@ -28,7 +28,7 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-    VRPNController* GetController();
+    TSharedPtr<VRPNController> GetController();
 private:
-    VRPNController* vrpnController = nullptr;
+    TSharedPtr<VRPNController> vrpnController = nullptr;
 };

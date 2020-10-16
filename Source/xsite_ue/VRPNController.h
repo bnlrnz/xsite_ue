@@ -73,7 +73,8 @@ private:
     std::shared_ptr<vrpn_Analog_Remote> analog = nullptr;
 
 public:
-    VRPNController(const FString &Device, const FString &HostIP, uint32 Port = vrpn_DEFAULT_LISTEN_PORT_NO);
+    VRPNController(){};
+    void Init(const FString& Device, const FString& HostIP, uint32 Port = vrpn_DEFAULT_LISTEN_PORT_NO);
 
     // run this whenever a new tracker value is needed, e.g. in the Tick Method, then access the value by the TrackerDataMap
     void Poll();

@@ -143,13 +143,13 @@ private:
     UTextBoxWidget* TextBox = nullptr;
 
     UPROPERTY()
-    APlayerController *PlayerController{};
+    APlayerController *PlayerController = nullptr;
     
     UPROPERTY()
-    APlayerCameraManager *CamManager{};
+    APlayerCameraManager *CamManager = nullptr;
 
     bool bStandaloneGame = false;
 
     UPROPERTY()
-    UCaveGameInstance *CaveGameInstance{};
+    UCaveGameInstance *CaveGameInstance = nullptr;
 };

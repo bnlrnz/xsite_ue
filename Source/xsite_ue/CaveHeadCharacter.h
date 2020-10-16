@@ -88,7 +88,7 @@ private:
 
     void ResetHead();
 
-    UFUNCTION(NetMulticast, unreliable)
+    UFUNCTION(NetMulticast, Reliable)
     void Multicast_ToggleGhost();
 
     float SpeedFactor = 1.0f;

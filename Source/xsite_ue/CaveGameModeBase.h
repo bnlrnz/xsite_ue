@@ -20,5 +20,6 @@ public:
     virtual void PostLogin(APlayerController *NewPlayer) override;
 
     // List of PlayerControllers
+    UPROPERTY()
     TArray<class APlayerController *> PlayerControllerList;
 };

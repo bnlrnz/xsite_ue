@@ -78,7 +78,7 @@ void VRPN_CALLBACK handle_dtrack_button(void *userData, const vrpn_BUTTONCB data
     thisptr->m_mutex.Unlock();
 }
 
-VRPNController::VRPNController(const FString &Device, const FString &HostIP, uint32 Port)
+void VRPNController::Init(const FString &Device, const FString &HostIP, uint32 Port)
 {
     //UE_LOG(LogCave, Warning, TEXT("VRPNController connecting..."));
 
@@ -174,4 +174,8 @@ VRPNController::~VRPNController()
         f = nullptr;
     
     OnButtonPressedCallbacks.Empty();
+
+    this->tracker.reset();
+    this->analog.reset();
+    this->button.reset();
 }

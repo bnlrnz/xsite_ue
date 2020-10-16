@@ -60,6 +60,7 @@ private:
     double AnalogY = 0.0;
     double LaserOffset = 0.0;
 
+    UPROPERTY()
     ACaveHeadCharacter *CaveHeadCharacter = nullptr;
 
     FRotator CaveHeadCharacterStartRotation = FRotator(0, 0, 0);

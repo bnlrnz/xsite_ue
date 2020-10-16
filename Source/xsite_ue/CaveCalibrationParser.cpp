@@ -4,7 +4,7 @@
 #include "xsite_ue.h"
 #include "JsonObjectConverter.h"
 
-bool CaveCalibrationParser::ParseJsonString(FString JsonString, FCalibrationData *CalibrationData)
+bool CaveCalibrationParser::ParseJsonString(const FString& JsonString, FCalibrationData *CalibrationData)
 {
     if (!FJsonObjectConverter::JsonObjectStringToUStruct(JsonString, CalibrationData, 0, 0))
     {
