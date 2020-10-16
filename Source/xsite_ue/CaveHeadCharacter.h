@@ -64,6 +64,9 @@ public:
 
     virtual void Tick( float DeltaTime) override;
 
+    FVector GetPlayerStartLocation() { return PlayerStartLocation; }
+    FRotator GetPlayerStartRotation() { return PlayerStartRotation; }
+
 protected:
     // Called when the game starts or when spawned
     virtual void BeginPlay() override;
@@ -71,6 +74,12 @@ protected:
 private:
     UPROPERTY(Replicated)
     FVector HeadOrigin = FVector(0.0f, 0.0f ,0.0f);
+
+    UPROPERTY(Replicated)
+    FVector PlayerStartLocation= FVector(0.0f, 0.0f, 0.0f);
+
+    UPROPERTY(Replicated)
+    FRotator PlayerStartRotation = FRotator(0.0f, 0.0f, 0.0f);
 
     void MouseLeftClick();
 

@@ -5,6 +5,7 @@
 #include "Engine.h"
 #include "MultiViewportCameraActor.h"
 #include "Net/UnrealNetwork.h"
+#include "GameFramework/GameModeBase.h"
 #include "CaveGameModeBase.h"
 
 static TAutoConsoleVariable<int> HeadTrackerID(
@@ -52,6 +53,16 @@ ACaveHeadCharacter::ACaveHeadCharacter()
     DisableComponentsSimulatePhysics();
 }
 
+void ACaveHeadCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+    Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+    DOREPLIFETIME(ACaveHeadCharacter, bHeadtrackingEnabled);
+    DOREPLIFETIME(ACaveHeadCharacter, HeadOrigin);
+    DOREPLIFETIME(ACaveHeadCharacter, PlayerStartLocation);
+    DOREPLIFETIME(ACaveHeadCharacter, PlayerStartRotation);
+}
+
 // Called when the game starts or when spawned
 void ACaveHeadCharacter::BeginPlay()
 {
@@ -68,6 +79,17 @@ void ACaveHeadCharacter::BeginPlay()
         UE_LOG(LogCave, Error, TEXT("[ACaveHeadCharacter::BeginPlay] Could not obtain CaveGameInstance from GameInstance. Make shure your Game Instance is set to CaveGameInstance in the project settings."));
         return;
     }
+
+    auto PlayerController = GetWorld()->GetFirstPlayerController();
+
+    auto PlayerStart = GetWorld()->GetAuthGameMode()->K2_FindPlayerStart(PlayerController);
+
+    this->PlayerStartLocation = PlayerStart->GetActorLocation();
+    this->PlayerStartRotation = PlayerStart->GetActorRotation();
+
+    // make the player spawn at player start and look in the correct direction
+    PlayerController->SetControlRotation(this->PlayerStartRotation);
+    SetActorLocationAndRotation(this->PlayerStartLocation, this->PlayerStartRotation);
 
     auto CaveController = CaveGameInstance->GetCaveController();
 
@@ -130,7 +152,7 @@ FVector ACaveHeadCharacter::GetRealHeadLocation()
     {
 #if WITH_EDITOR
         //UE_LOG(LogCave, Warning, TEXT("GetRealHeadLocation (Editor): %s"), *this->GetActorLocation().ToString());
-        return this->GetActorLocation();
+        return this->GetActorLocation() - this->PlayerStartLocation;
 #else
         //UE_LOG(LogCave, Warning, TEXT("GetRealHeadLocation (Game): %s"), *this->HeadOrigin.ToString());
         return this->HeadOrigin;
@@ -185,13 +207,12 @@ void ACaveHeadCharacter::ResetHead()
         return;
     }
 
-    SetActorLocation(CaveController->EyeOrigin);
-
     auto *PlayerController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 
     if (PlayerController)
     {
-        PlayerController->SetControlRotation(FRotator(0, 0, 0));
+        PlayerController->SetControlRotation(this->PlayerStartRotation);
+        SetActorLocationAndRotation(this->PlayerStartLocation, this->PlayerStartRotation);
     }
 }
 
@@ -276,14 +297,6 @@ void ACaveHeadCharacter::ToggleHeadtracking()
     // toggle headtracking
     bHeadtrackingEnabled = !bHeadtrackingEnabled;
     UE_LOG(LogCave, Warning, TEXT("Headtracking: %s"), bHeadtrackingEnabled ? TEXT("true") : TEXT("false"));
-}
-
-void ACaveHeadCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty> &OutLifetimeProps) const
-{
-    Super::GetLifetimeReplicatedProps(OutLifetimeProps);
-
-    DOREPLIFETIME(ACaveHeadCharacter, bHeadtrackingEnabled);
-    DOREPLIFETIME(ACaveHeadCharacter, HeadOrigin);
 }
 
 void ACaveHeadCharacter::MoveForward(float Value)
