@@ -81,10 +81,6 @@ private:
     UPROPERTY(Replicated)
     FRotator PlayerStartRotation = FRotator(0.0f, 0.0f, 0.0f);
 
-    void MouseLeftClick();
-
-    void ToggleInputMode();
-
     enum INPUT_MODE {
         MOVE, SETUP /* SETUP is deprecated*/
     } eInputMode = MOVE;
@@ -96,6 +92,8 @@ private:
     bool bIsGhost = false;
 
     void ResetHead();
+
+    void PrintHelp();
 
     UFUNCTION(NetMulticast, Reliable)
     void Multicast_ToggleGhost();

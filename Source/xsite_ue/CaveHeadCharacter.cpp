@@ -172,6 +172,7 @@ void ACaveHeadCharacter::SetupPlayerInputComponent(UInputComponent *PlayerInputC
         PlayerInputComponent->BindAction("ToggleHeadtracking", IE_Pressed, this,
                                          &ACaveHeadCharacter::ToggleHeadtracking);
         PlayerInputComponent->BindAction("ToggleGhost", IE_Pressed, this, &ACaveHeadCharacter::ToggleGhost);
+        PlayerInputComponent->BindAction("PrintHelp", IE_Pressed, this, &ACaveHeadCharacter::PrintHelp);
         PlayerInputComponent->BindAction("ResetHead", IE_Pressed, this, &ACaveHeadCharacter::ResetHead);
 
         // set up gameplay key bindings
@@ -187,6 +188,14 @@ void ACaveHeadCharacter::SetupPlayerInputComponent(UInputComponent *PlayerInputC
     }
 
     PlayerInputComponent->BindAction("ExitGame", IE_Pressed, this, &ACaveHeadCharacter::ExitGame);
+}
+
+void ACaveHeadCharacter::PrintHelp()
+{
+    GEngine->AddOnScreenDebugMessage(4, 600, FColor::Green, TEXT("[G] Toogles ghost/fly mode/walk mode"));
+    GEngine->AddOnScreenDebugMessage(3, 600, FColor::Green, TEXT("[Space] Resets Player to Start Position and Rotation"));
+    GEngine->AddOnScreenDebugMessage(2, 600, FColor::Green, TEXT("[ESC] Closes this window and shuts down clients"));
+    GEngine->AddOnScreenDebugMessage(1, 600, FColor::Green, TEXT("[F1] Prints this help"));
 }
 
 void ACaveHeadCharacter::ResetHead()
