@@ -124,6 +124,12 @@ void UCaveGameInstance::Cave_SetBlending(const FString &hostname, bool enabled)
     CaveHeadCharacter->Multicast_Blending(hostname, enabled);
 }
 
+void UCaveGameInstance::Cave_Map(const FString& Map)
+{
+    // TODO: this does not work for the clients :(
+    GetWorld()->ServerTravel(*Map, ETravelType::TRAVEL_Absolute);
+}
+
 void UCaveGameInstance::Cave_SetWarpingAll(bool enabled)
 {
     ACaveHeadCharacter *CaveHeadCharacter = GetCaveHeadCharacter();

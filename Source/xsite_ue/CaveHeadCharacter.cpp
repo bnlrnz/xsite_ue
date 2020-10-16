@@ -192,6 +192,8 @@ void ACaveHeadCharacter::SetupPlayerInputComponent(UInputComponent *PlayerInputC
 
 void ACaveHeadCharacter::PrintHelp()
 {
+    GEngine->AddOnScreenDebugMessage(6, 600, FColor::Green, TEXT("Custom Console Commands are prefixed with 'Cave'"));
+    GEngine->AddOnScreenDebugMessage(5, 600, FColor::Green, TEXT("[TAB] Opens console"));
     GEngine->AddOnScreenDebugMessage(4, 600, FColor::Green, TEXT("[G] Toogles ghost/fly mode/walk mode"));
     GEngine->AddOnScreenDebugMessage(3, 600, FColor::Green, TEXT("[Space] Resets Player to Start Position and Rotation"));
     GEngine->AddOnScreenDebugMessage(2, 600, FColor::Green, TEXT("[ESC] Closes this window and shuts down clients"));

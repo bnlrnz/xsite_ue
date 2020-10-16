@@ -49,6 +49,10 @@ public:
     UFUNCTION(Exec, Category = Cave)
     void Cave_SetBlending(const FString &hostname, bool enabled);
 
+    /*console command to swich map*/
+    UFUNCTION(Exec, Category = Cave)
+    void Cave_Map (const FString& Map);
+
     /*console command to set warping for all connected clients*/
     UFUNCTION(Exec, Category = Cave)
     void Cave_SetWarpingAll(bool enabled);
