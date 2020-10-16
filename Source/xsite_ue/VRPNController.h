@@ -66,11 +66,11 @@ private:
     TArray<TFunction<void(int32, ButtonState)>> OnButtonPressedCallbacks;
     TArray<TFunction<void(AnalogData)>> OnAnalogChangedCallbacks;
 
-    vrpn_Connection *connection = nullptr;
+    std::shared_ptr<vrpn_Connection> connection = nullptr;
 
-    vrpn_Tracker_Remote *tracker = nullptr;
-    vrpn_Button_Remote *button = nullptr;
-    vrpn_Analog_Remote *analog = nullptr;
+    std::shared_ptr<vrpn_Tracker_Remote> tracker = nullptr;
+    std::shared_ptr<vrpn_Button_Remote> button = nullptr;
+    std::shared_ptr<vrpn_Analog_Remote> analog = nullptr;
 
 public:
     VRPNController(const FString &Device, const FString &HostIP, uint32 Port = vrpn_DEFAULT_LISTEN_PORT_NO);

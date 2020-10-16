@@ -84,21 +84,21 @@ VRPNController::VRPNController(const FString &Device, const FString &HostIP, uin
 
     std::stringstream nic;
     nic << TCHAR_TO_UTF8(*Device) << "@" << TCHAR_TO_UTF8(*HostIP) << ":" << Port;
-    this->connection = vrpn_get_connection_by_name(nic.str().c_str());
+    this->connection = std::shared_ptr<vrpn_Connection>(vrpn_get_connection_by_name(nic.str().c_str()));
 
     UE_LOG(LogCave, Warning, TEXT("VRPNController connecting %s... %s!"), *FString(nic.str().c_str()),
            this->connection->connected() ? TEXT("done") : TEXT("failed"));
 
     // create the tracker (marker + flystick) component and register the handler
-    this->tracker = new vrpn_Tracker_Remote(TCHAR_TO_UTF8(*Device), connection);
+    this->tracker = std::make_shared<vrpn_Tracker_Remote>(TCHAR_TO_UTF8(*Device), connection.get());
     this->tracker->register_change_handler(this, handle_dtrack_tracker);
 
     // create the flystick analog stick
-    this->analog = new vrpn_Analog_Remote(TCHAR_TO_UTF8(*Device), connection);
+    this->analog = std::make_shared<vrpn_Analog_Remote>(TCHAR_TO_UTF8(*Device), connection.get());
     this->analog->register_change_handler(this, handle_dtrack_analog);
 
     // create the flystick buttons
-    this->button = new vrpn_Button_Remote(TCHAR_TO_UTF8(*Device), connection);
+    this->button = std::make_shared<vrpn_Button_Remote>(TCHAR_TO_UTF8(*Device), connection.get());
     this->button->register_change_handler(this, handle_dtrack_button);
 }
 
@@ -174,25 +174,4 @@ VRPNController::~VRPNController()
         f = nullptr;
     
     OnButtonPressedCallbacks.Empty();
-
-    if (this->tracker != nullptr)
-    {
-        delete (this->tracker);
-        this->tracker = nullptr;
-    }
-    if (this->button != nullptr)
-    {
-        delete (this->button);
-        this->button = nullptr;
-    }
-    if (this->analog != nullptr)
-    {
-        delete (this->analog);
-        this->analog = nullptr;
-    }
-    if (this->connection != nullptr)
-    {
-        delete (this->connection);
-        this->connection = nullptr;
-    }
 }
