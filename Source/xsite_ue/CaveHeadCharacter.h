@@ -89,6 +89,8 @@ private:
 
     void ToggleGhost();
 
+    void ToggleFPS();
+
     bool bIsGhost = false;
 
     void ResetHead();
@@ -97,6 +99,9 @@ private:
 
     UFUNCTION(NetMulticast, Reliable)
     void Multicast_ToggleGhost();
+
+    UFUNCTION(NetMulticast, Reliable)
+    void Multicast_ToggleFPS();
 
     float SpeedFactor = 1.0f;
 

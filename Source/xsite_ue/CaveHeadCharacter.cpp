@@ -93,6 +93,9 @@ void ACaveHeadCharacter::BeginPlay()
 
     auto CaveController = CaveGameInstance->GetCaveController();
 
+    if (GetWorld()->IsServer())
+        PrintHelp();
+
     if (!IsValid(CaveController))
     {
         UE_LOG(LogCave, Error, TEXT("[ACaveHeadCharacter::BeginPlay] Could not obtain CaveController from GameInstance. Make shure there is an instance of CaveController (e.g. Blueprint) in your scene and set up."));
@@ -174,6 +177,7 @@ void ACaveHeadCharacter::SetupPlayerInputComponent(UInputComponent *PlayerInputC
         PlayerInputComponent->BindAction("ToggleGhost", IE_Pressed, this, &ACaveHeadCharacter::ToggleGhost);
         PlayerInputComponent->BindAction("PrintHelp", IE_Pressed, this, &ACaveHeadCharacter::PrintHelp);
         PlayerInputComponent->BindAction("ResetHead", IE_Pressed, this, &ACaveHeadCharacter::ResetHead);
+        PlayerInputComponent->BindAction("ToggleFPS", IE_Pressed, this, &ACaveHeadCharacter::ToggleFPS);
 
         // set up gameplay key bindings
         PlayerInputComponent->BindAction("Slow", IE_Pressed, this, &ACaveHeadCharacter::SlowEnabled);
@@ -253,6 +257,16 @@ void ACaveHeadCharacter::Multicast_ExecuteCommand_Implementation(const FString &
     }
 }
 
+void ACaveHeadCharacter::Multicast_ToggleFPS_Implementation()
+{
+    auto *PlayerController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+
+    if (PlayerController)
+    {
+        PlayerController->ConsoleCommand(TEXT("Stat FPS"));
+    }
+}
+
 void ACaveHeadCharacter::Multicast_ToggleGhost_Implementation()
 {
     auto *CharacterMovementPtr = GetCharacterMovement();
@@ -287,6 +301,8 @@ void ACaveHeadCharacter::Multicast_ToggleGhost_Implementation()
 }
 
 void ACaveHeadCharacter::ToggleGhost() { Multicast_ToggleGhost(); }
+
+void ACaveHeadCharacter::ToggleFPS() { Multicast_ToggleFPS(); }
 
 void ACaveHeadCharacter::ExitGame()
 {
