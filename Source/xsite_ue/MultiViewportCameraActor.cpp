@@ -207,13 +207,22 @@ void AMultiViewportCameraActor::BeginPlay()
 
     // IdentifyScreen();
     
-    // r.HZBOcclusion 1 enables Hierarchical Z-Buffer Occlusion (see https://docs.unrealengine.com/en-US/Engine/Rendering/VisibilityCulling/index.html)
-    // we do this method to prevent flickering actors (static meshes) caused by aggressive default frustum/occlusion culling
-    // whenever an extra window is spawn (with a seperate view frustum than the "main" window) we should make shure to activate this
-    // we could also set r.AllowOcclusionQueries=0, but this would probably disable culling all together (which we do not want?)
     if (this->PlayerController)
     {
+        // r.HZBOcclusion 1 enables Hierarchical Z-Buffer Occlusion (see https://docs.unrealengine.com/en-US/Engine/Rendering/VisibilityCulling/index.html)
+        // we do this method to prevent flickering actors (static meshes) caused by aggressive default frustum/occlusion culling
+        // whenever an extra window is spawn (with a seperate view frustum than the "main" window) we should make shure to activate this
+        // we could also set r.AllowOcclusionQueries=0, but this would probably disable culling all together (which we do not want?)
         this->PlayerController->ConsoleCommand("r.AllowOcclusionQueries 0");
+
+        //TODO: this is just for performance testing!
+        // Edit from server with Cave_Execute "command"
+        // https://docs.unrealengine.com/en-US/Engine/Performance/Scalability/ScalabilityReference/index.html
+        this->PlayerController->ConsoleCommand("Gamma 5"); // our cave is currently really dark
+        this->PlayerController->ConsoleCommand("r.DepthOfFieldQuality 0"); // we don't want that
+        this->PlayerController->ConsoleCommand("r.ScreenPercentage 50"); // our cave walls smooth quite a lot of pixels
+        this->PlayerController->ConsoleCommand("r.ssr.quality 0"); // flickering water reflections if we use ssr (screen space reflections)
+        this->PlayerController->ConsoleCommand("r.PostProcessingAAQuality 1");
     }
 
     // initialize everything before we call base class so that in blueprint beginplay everything is ready

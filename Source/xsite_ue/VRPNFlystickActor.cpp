@@ -94,6 +94,11 @@ void AVRPNFlystickActor::BeginPlay()
         return;
     }
 
+    auto CaveHead = CaveGameInstance->GetCaveHeadCharacter();
+
+    if(IsValid(CaveHead))
+        this->PlayerStartLocation = CaveHead->GetPlayerStartLocation();
+
     vrpnController->AddTrackerChangedCallback(
         [this, vrpnController, EyeOrigin](int32 sensor, VRPNController::TrackerData trackerData) {
             //UE_LOG(LogCave, Warning, TEXT("Tracker ID: %d"), sensor);
@@ -128,8 +133,9 @@ void AVRPNFlystickActor::BeginPlay()
 
             this->End = FlystickOrientation.RotateVector(FVector(500, 0, 0)) + this->Start;
 
-            this->Start = this->CaveHeadCharacter->NetRot.RotateVector(this->Start);
-            this->End = this->CaveHeadCharacter->NetRot.RotateVector(this->End);
+            // add the player start offset
+            this->Start = this->CaveHeadCharacter->NetRot.RotateVector(this->Start) + PlayerStartLocation + this->PlayerStartLocation;
+            this->End = this->CaveHeadCharacter->NetRot.RotateVector(this->End) + this->PlayerStartLocation;
         });
 
     vrpnController->AddButtonPressedCallback(

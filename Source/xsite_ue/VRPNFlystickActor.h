@@ -66,6 +66,8 @@ private:
     FRotator CaveHeadCharacterStartRotation = FRotator(0, 0, 0);
     FRotator DragStartRotation = FRotator(0, 0, 0);
 
+    FVector PlayerStartLocation = FVector(0,0,0);
+
     void DeselectPointedActor();
 
     void HandleManipulate();
