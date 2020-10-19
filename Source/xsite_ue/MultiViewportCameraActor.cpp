@@ -43,13 +43,13 @@ AMultiViewportCameraActor::AMultiViewportCameraActor()
     GetCameraComponent()->PostProcessSettings.MotionBlurAmount = 0.0f;
 
     BlendMaterial = LoadObjFromPath<UMaterial>(TEXT("Material'/xsite_ue/BlendMaterial.BlendMaterial'"));
-    BlendMaterial->BlendablePriority = 0;
+    BlendMaterial->BlendablePriority = 1;
 
     BlendMaterialInstance_Dynamic = UMaterialInstanceDynamic::Create(BlendMaterial, this,
                                                                      TEXT("BlendMaterialInstance_Dynamic"));
 
     WarpMaterial = LoadObjFromPath<UMaterial>(TEXT("Material'/xsite_ue/WarpMaterial.WarpMaterial'"));
-    WarpMaterial->BlendablePriority = 1;
+    WarpMaterial->BlendablePriority = 0;
 
     WarpMaterialInstance_Dynamic = UMaterialInstanceDynamic::Create(WarpMaterial, this,
                                                                     TEXT("WarpMaterialInstance_Dynamic"));
