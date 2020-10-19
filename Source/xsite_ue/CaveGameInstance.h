@@ -25,6 +25,9 @@ public:
     UFUNCTION(BlueprintCallable)
     AVRPNControllerActor* GetVRPNControllerActor(const FString& DeviceName);
 
+    UFUNCTION()
+    void ListAllCameraActors();
+
     /*console command to execute console commands on server and clients*/
     UFUNCTION(Exec, Category = Cave)
     void Cave_Execute(const FString &Command);

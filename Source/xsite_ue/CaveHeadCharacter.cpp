@@ -265,6 +265,10 @@ void ACaveHeadCharacter::Multicast_ToggleFPS_Implementation()
     {
         PlayerController->ConsoleCommand(TEXT("Stat FPS"));
     }
+
+    auto CaveGameInstance = (UCaveGameInstance *)GetWorld()->GetGameInstance();
+
+    CaveGameInstance->ListAllCameraActors();
 }
 
 void ACaveHeadCharacter::Multicast_ToggleGhost_Implementation()

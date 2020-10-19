@@ -5,6 +5,19 @@
 
 FString UCaveGameInstance::GetComputerName() { return FString(FPlatformProcess::ComputerName()); }
 
+
+void UCaveGameInstance::ListAllCameraActors()
+{
+    if (GetWorld())
+    {
+        for (TActorIterator<ACameraActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
+        {
+            auto CameraActor = *ActorItr;
+            UE_LOG(LogCave, Warning, TEXT("Found: %s"), *CameraActor->GetClass()->GetName());
+        }
+    }
+}
+
 ACaveHeadCharacter *UCaveGameInstance::GetCaveHeadCharacter()
 {
     if (CachedCaveHeadCharacter != nullptr)
