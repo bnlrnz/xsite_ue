@@ -259,12 +259,7 @@ void ACaveHeadCharacter::Multicast_ExecuteCommand_Implementation(const FString &
 
 void ACaveHeadCharacter::Multicast_ToggleFPS_Implementation()
 {
-    auto *PlayerController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
-
-    if (PlayerController)
-    {
-        PlayerController->ConsoleCommand(TEXT("Stat FPS"));
-    }
+    GEngine->Exec(GetWorld(), TEXT("stat fps"));
 
     auto CaveGameInstance = (UCaveGameInstance *)GetWorld()->GetGameInstance();
 

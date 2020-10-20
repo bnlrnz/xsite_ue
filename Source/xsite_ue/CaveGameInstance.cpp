@@ -13,7 +13,21 @@ void UCaveGameInstance::ListAllCameraActors()
         for (TActorIterator<ACameraActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
         {
             auto CameraActor = *ActorItr;
-            UE_LOG(LogCave, Warning, TEXT("Found: %s"), *CameraActor->GetClass()->GetName());
+            UE_LOG(LogCave, Warning, TEXT("Found Camera Actor: %s"), *CameraActor->GetClass()->GetName());
+
+            if (CameraActor->GetClass()->GetName().Equals("CameraActor"))
+                CameraActor->Destroy();
+        }
+         
+        auto GameWindow = GEngine->GameViewport->GetWindow();
+        UE_LOG(LogCave, Warning, TEXT("Found Window: %s"), *GameWindow->GetTitle().ToString());
+
+        GEngine->AddOnScreenDebugMessage(-1, 600, FColor::Green, TEXT("Trying Hide Window"));
+
+        if (!GIsEditor)
+        {
+            GEngine->AddOnScreenDebugMessage(-1, 600, FColor::Green, TEXT("Hide Window"));
+            GameWindow->HideWindow();
         }
     }
 }
