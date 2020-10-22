@@ -28,6 +28,10 @@ public:
     UFUNCTION()
     void ListAllCameraActors();
 
+    /*console command to hide default window*/
+    UFUNCTION(Exec, Category = Cave)
+    void Cave_HideDefaultWindow();
+
     /*console command to execute console commands on server and clients*/
     UFUNCTION(Exec, Category = Cave)
     void Cave_Execute(const FString &Command);

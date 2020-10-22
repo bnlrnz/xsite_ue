@@ -262,8 +262,6 @@ void ACaveHeadCharacter::Multicast_ToggleFPS_Implementation()
     GEngine->Exec(GetWorld(), TEXT("stat fps"));
 
     auto CaveGameInstance = (UCaveGameInstance *)GetWorld()->GetGameInstance();
-
-    CaveGameInstance->ListAllCameraActors();
 }
 
 void ACaveHeadCharacter::Multicast_ToggleGhost_Implementation()

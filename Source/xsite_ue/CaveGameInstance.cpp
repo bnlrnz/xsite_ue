@@ -5,6 +5,15 @@
 
 FString UCaveGameInstance::GetComputerName() { return FString(FPlatformProcess::ComputerName()); }
 
+void UCaveGameInstance::Cave_HideDefaultWindow(){
+        // we can also the default game window from now on
+        // TODO: does this actually prevent it from rendering?
+        auto GameWindow = GEngine->GameViewport->GetWindow();
+        if (!GIsEditor && GameWindow->IsVisible())
+        {
+            GameWindow->HideWindow();
+        }
+}
 
 void UCaveGameInstance::ListAllCameraActors()
 {
@@ -17,17 +26,6 @@ void UCaveGameInstance::ListAllCameraActors()
 
             if (CameraActor->GetClass()->GetName().Equals("CameraActor"))
                 CameraActor->Destroy();
-        }
-         
-        auto GameWindow = GEngine->GameViewport->GetWindow();
-        UE_LOG(LogCave, Warning, TEXT("Found Window: %s"), *GameWindow->GetTitle().ToString());
-
-        GEngine->AddOnScreenDebugMessage(-1, 600, FColor::Green, TEXT("Trying Hide Window"));
-
-        if (!GIsEditor)
-        {
-            GEngine->AddOnScreenDebugMessage(-1, 600, FColor::Green, TEXT("Hide Window"));
-            GameWindow->HideWindow();
         }
     }
 }

@@ -225,7 +225,12 @@ void AMultiViewportCameraActor::BeginPlay()
             this->PlayerController->ConsoleCommand("r.ssr.quality 0"); // flickering water reflections if we use ssr (screen space reflections)
             this->PlayerController->ConsoleCommand("r.PostProcessingAAQuality 1");
         }
+        
+        // if there is more than 1 render target (aka we spawning this extra window), this should be set https://docs.unrealengine.com/en-US/Platforms/MR/MRTroubleshooting/index.html
+        this->PlayerController->ConsoleCommand("r.SceneRenderTargetResizeMethod 2");
     }
+
+    CaveGameInstance->Cave_HideDefaultWindow();
 
     // initialize everything before we call base class so that in blueprint beginplay everything is ready
     Super::BeginPlay();
