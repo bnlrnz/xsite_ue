@@ -133,7 +133,7 @@ void AVRPNFlystickActor::BeginPlay()
 
             this->End = FlystickOrientation.RotateVector(FVector(500, 0, 0)) + this->Start;
 
-            // add the player start offset
+            // add the player start offset (TODO: or should it be the head position?)
             this->Start = this->CaveHeadCharacter->NetRot.RotateVector(this->Start) + PlayerStartLocation + this->PlayerStartLocation;
             this->End = this->CaveHeadCharacter->NetRot.RotateVector(this->End) + this->PlayerStartLocation;
         });
