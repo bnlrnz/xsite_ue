@@ -1,6 +1,7 @@
 # xsite_ue
 
-Unreal Engine Cave Plugin for Unreal Engine Version 4.25.3 (4.25.0-4.25.2 or newer versions may or may not work...)
+Unreal Engine Cave Plugin for Unreal Engine Version 4.25.4 (4.25.0-4.25.4 or newer versions may or may not work...)
+This Plugin is somewhat similar to nDisplay (but a lot smaller, easier). However, it runs on Linux, Mac and Windows.
 
 ## Demo Application
 You can find a preconfigured demo project here: [xsite_ue_example](https://github.com/bnlrnz/xsite_ue_example)
