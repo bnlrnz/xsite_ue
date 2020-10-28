@@ -1,7 +1,22 @@
+<img src="/Doc/demo.jpg" width="400">
+Example scene running an Unreal Engine Demo with the xsite_ue in our CAVE at the TU Bergakademie Freiberg computer science department.
+
 # xsite_ue
 
 Unreal Engine Cave Plugin for Unreal Engine Version 4.25.4 (4.25.0-4.25.4 or newer versions may or may not work...)
 This Plugin is somewhat similar to nDisplay (but a lot smaller, easier). However, it runs on Linux, Mac and Windows.
+
+Features:
+
+- project plugin, no need to rebuild engine
+- rendering a single scene with multiple or one computers
+- each computer can render to several displays with different view frustums or just one
+- there is only one instance per computer which will spawn the demanded windows
+- off axis view frustums
+- warping and blending support
+- VRPN Support with head tracking, flystick navigation, interaction
+- some templates for flystick interaction (draggable object, buttons)
+- single configuration file (json) for all computers
 
 ## Demo Application
 You can find a preconfigured demo project here: [xsite_ue_example](https://github.com/bnlrnz/xsite_ue_example)
