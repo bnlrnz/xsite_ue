@@ -13,7 +13,7 @@ Features:
 - each computer can render to several displays with different view frustums or just one
 - there is only one instance per computer which will spawn the demanded windows
 - off axis view frustums
-- warping and blending support
+- warping and blending support (at least for our planar cave walls (and floor))
 - VRPN Support with head tracking, flystick navigation, interaction
 - some templates for flystick interaction (draggable object, buttons)
 - single configuration file (json) for all computers
