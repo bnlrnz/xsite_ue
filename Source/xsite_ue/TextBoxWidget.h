@@ -22,7 +22,7 @@ public:
     virtual TSharedRef<SWidget> RebuildWidget() override;
 
     UPROPERTY()
-    UTextBlock *TextBlock;
+    UTextBlock* TextBlock;
 
     UPROPERTY(EditAnywhere)
     FString Text = FString("");

@@ -259,9 +259,22 @@ void ACaveHeadCharacter::Multicast_ExecuteCommand_Implementation(const FString &
 
 void ACaveHeadCharacter::Multicast_ToggleFPS_Implementation()
 {
-    GEngine->Exec(GetWorld(), TEXT("stat fps"));
+    if (GetWorld())
+    {
+        for (TActorIterator<AMultiViewportCameraActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
+        {
+            auto CameraActor = *ActorItr;
 
-    auto CaveGameInstance = (UCaveGameInstance *)GetWorld()->GetGameInstance();
+            if (CameraActor->bScreenIdentifyEnabled)
+            {
+                CameraActor->IdentifyScreenClear();
+            }
+            else
+            {
+                CameraActor->IdentifyScreen();
+            }
+        }
+    }
 }
 
 void ACaveHeadCharacter::Multicast_ToggleGhost_Implementation()
