@@ -22,6 +22,7 @@ Example scene running an Unreal Engine Demo with the xsite_ue in our CAVE at the
 
 ## Demo Application
 You can find a preconfigured demo project here: [xsite_ue_example](https://github.com/bnlrnz/xsite_ue_example)
+The demo project also contains some example configuration files.
 
 ## Installation
 Clone into "Plugins" folder (if it is not there, create it in your project root) of your Unreal Engine Project or add as submodule. Initialize and pull git lfs.
