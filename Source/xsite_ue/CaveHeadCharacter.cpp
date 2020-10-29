@@ -72,8 +72,10 @@ void ACaveHeadCharacter::BeginPlay()
     if (!GetWorld()->IsServer())
         return;
 
+    // Get our custom game instance
     auto CaveGameInstance = Cast<UCaveGameInstance>(GetWorld()->GetGameInstance());
 
+    // Check, if we got the right one
     if (!IsValid(CaveGameInstance))
     {
         UE_LOG(LogCave, Error, TEXT("[ACaveHeadCharacter::BeginPlay] Could not obtain CaveGameInstance from GameInstance. Make shure your Game Instance is set to CaveGameInstance in the project settings."));
@@ -82,6 +84,7 @@ void ACaveHeadCharacter::BeginPlay()
 
     auto PlayerController = GetWorld()->GetFirstPlayerController();
 
+    // Get the player start. This will be the global offset for a lot of things
     auto PlayerStart = GetWorld()->GetAuthGameMode()->K2_FindPlayerStart(PlayerController);
 
     this->PlayerStartLocation = PlayerStart->GetActorLocation();
