@@ -64,22 +64,30 @@ To display the plugins content (sources, materials, blueprints ...) in the "Cont
 
 Add a **CaveControllerActor Blueprint** from the xsite_ue Content folder to the scene (the location is not important). Select the **CaveControllerActor** in the "World Outliner". Down in the "Details" Panel you will find a few things to set up the Controller:
 
-- Configuration File Path: this should point to a JSON file with all the relevant information for distributed rendering, warping, blending...
+- Configuration File Path: this should point to a JSON file with all the relevant information for distributed rendering, warping, blending... [see example project](https://github.com/bnlrnz/xsite_ue_example#configuration)
 - BlendTexture Folder Path: this should point to a folder where all the blend/alpha textures are stored
 
-Since multiple instances of Unreal Projects will share the Configuration and the Blend/Alpha textures, they should be situated somewhere outside the projects folders.
+Since multiple instances of Unreal Projects will share the configuration and the Blend/Alpha textures, they should be situated somewhere outside the projects folders.
 
 Disable **Temporal Anti-Aliasing** (you can choose "None" or any other AA method) and **Motion Blur** in the project settings. These effect don't work properly!
 
-### Tips
+### Tips/Issues
 
 You can execute some predefined console commands for the cave environment. [TAB] opens the console. Type Cave_ prefix to see commands.
 
 Cave_Execute "..." executes commands on the server and all clients. This is useful for debugging or performance tweaking:
 
+- Cave_Execute r.DepthOfFieldQuality 0 disables depth of field
+- Cave_Execute r.ssr.quality 0 disables screen space reflections which flicker a lot
+- Cave_Execute r.PostProcessingAAQuality 1 some weird angled frustums jump around if AA is used, try this
+- Cave_Execute r.SceneRenderTargetResizeMethod 2 resizing the render buffer if you have multiple windows with different resolution on one computer
+- Cave_Execute r.AllowOcclusionQueries 0 unreals culling does not work well with multiple view frustums, flickering objects etc.; this command disables the culling
 - Cave_Execute Gamma 0-10 (if screens are too dark)
 - Cave_Execute r.ScreenPercentage 0-100 (Scale render resolution, Performance)
 - Cave_Execute sg.PostProcessQuality 0-3 (Performance)
 - Cave_Execute r.PostProcessAAQuality 0-6 (Performace, depending on you AA method)
 - See [ScalabilityReference](https://docs.unrealengine.com/en-US/Engine/Performance/Scalability/ScalabilityReference/index.html) for more Performance Options/Tweaks
+
+
+
 
