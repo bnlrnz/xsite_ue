@@ -19,6 +19,7 @@ Features:
 
 <img src="/Doc/demo.jpg" width="400">
 Example scene running an Unreal Engine Demo with the xsite_ue in our CAVE at the TU Bergakademie Freiberg computer science department.
+The shown front wall contains of 9 overlapping projector images which get warped and blended.
 
 ## Demo Application
 You can find a preconfigured demo project here: [xsite_ue_example](https://github.com/bnlrnz/xsite_ue_example)
