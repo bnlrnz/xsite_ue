@@ -30,6 +30,7 @@ enum ButtonState
     Released = 0
 };
 
+// This wraps the used functionality of the vrpn c library for our purposes
 class VRPNController
 {  
 public:

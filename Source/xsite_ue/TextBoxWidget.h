@@ -9,9 +9,7 @@
 #include "Runtime/UMG/Public/UMG.h"
 #include "TextBoxWidget.generated.h"
 
-/**
- *
- */
+// Just a widget to display text on the slate windows of the MultiViewportCameraActor instances
 UCLASS()
 class  UTextBoxWidget : public UUserWidget {
     GENERATED_BODY()

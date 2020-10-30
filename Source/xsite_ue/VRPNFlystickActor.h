@@ -73,7 +73,7 @@ private:
     void HandleManipulate();
     void HandleNavigate();
 
-    // TODO Make this dynamic! from json
+    // TODO: Make this configurable from json (the walls are defined there!)
     const FVector LeftWallPosition = FVector(0.0f, -148.75f, 0.0f);
     const FVector LeftWallNormal = FVector(0.0f, 1.0f, 0.0f);
 

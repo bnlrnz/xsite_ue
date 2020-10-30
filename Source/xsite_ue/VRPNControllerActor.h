@@ -7,6 +7,7 @@
 #include "VRPNController.h"
 #include "VRPNControllerActor.generated.h"
 
+// this actor manages and configures the vrpn controller class
 UCLASS()
 class XSITE_UE_API AVRPNControllerActor : public AActor
 {
