@@ -28,7 +28,6 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FDirectoryPath BlendTextureFolderPath = {""};
 
-    UPROPERTY()
     FVector EyeOrigin;
 private:
     void LoadWallScreenConfig();
