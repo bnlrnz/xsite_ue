@@ -111,7 +111,7 @@ void ACaveHeadCharacter::BeginPlay()
 
     if (!IsValid(vrpnControllerActor))
     {
-        UE_LOG(LogCave, Error, TEXT("[ACaveHeadCharacter::BeginPlay] Could not obtain VrpnControllerActor '%s' from GameInstance. Skipping..."), TEXT("DTRACK"));
+        UE_LOG(LogCave, Error, TEXT("[ACaveHeadCharacter::BeginPlay] Could not obtain VrpnControllerActor '%s' from GameInstance. Skipping... Ignore this, if you don't use VRPN."), TEXT("DTRACK"));
         return;
     }
     
@@ -123,6 +123,8 @@ void ACaveHeadCharacter::BeginPlay()
     }
     else
     {
+        // TODO: this should be an interface
+        // Setup our (optional) head tracking
         vrpnController->AddTrackerChangedCallback(
             [this, vrpnController](int32 sensor, VRPNController::TrackerData trackerData) {
                 if (sensor != 0)
@@ -175,6 +177,7 @@ void ACaveHeadCharacter::SetupPlayerInputComponent(UInputComponent *PlayerInputC
     {
         Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+        // set up gameplay key bindings
         PlayerInputComponent->BindAction("ToggleHeadtracking", IE_Pressed, this,
                                          &ACaveHeadCharacter::ToggleHeadtracking);
         PlayerInputComponent->BindAction("ToggleGhost", IE_Pressed, this, &ACaveHeadCharacter::ToggleGhost);
@@ -182,7 +185,6 @@ void ACaveHeadCharacter::SetupPlayerInputComponent(UInputComponent *PlayerInputC
         PlayerInputComponent->BindAction("ResetHead", IE_Pressed, this, &ACaveHeadCharacter::ResetHead);
         PlayerInputComponent->BindAction("ToggleFPS", IE_Pressed, this, &ACaveHeadCharacter::ToggleFPS);
 
-        // set up gameplay key bindings
         PlayerInputComponent->BindAction("Slow", IE_Pressed, this, &ACaveHeadCharacter::SlowEnabled);
         PlayerInputComponent->BindAction("Slow", IE_Released, this, &ACaveHeadCharacter::SlowDisabled);
 
@@ -199,12 +201,12 @@ void ACaveHeadCharacter::SetupPlayerInputComponent(UInputComponent *PlayerInputC
 
 void ACaveHeadCharacter::PrintHelp()
 {
-    GEngine->AddOnScreenDebugMessage(6, 600, FColor::Green, TEXT("Custom Console Commands are prefixed with 'Cave'"));
-    GEngine->AddOnScreenDebugMessage(5, 600, FColor::Green, TEXT("[TAB] Opens console"));
-    GEngine->AddOnScreenDebugMessage(4, 600, FColor::Green, TEXT("[G] Toogles ghost/fly mode/walk mode"));
-    GEngine->AddOnScreenDebugMessage(3, 600, FColor::Green, TEXT("[Space] Resets Player to Start Position and Rotation"));
-    GEngine->AddOnScreenDebugMessage(2, 600, FColor::Green, TEXT("[ESC] Closes this window and shuts down clients"));
-    GEngine->AddOnScreenDebugMessage(1, 600, FColor::Green, TEXT("[F1] Prints this help"));
+    GEngine->AddOnScreenDebugMessage(6, 60, FColor::Green, TEXT("Custom Console Commands are prefixed with 'Cave'"));
+    GEngine->AddOnScreenDebugMessage(5, 60, FColor::Green, TEXT("[TAB] Opens console"));
+    GEngine->AddOnScreenDebugMessage(4, 60, FColor::Green, TEXT("[G] Toogles ghost/fly mode/walk mode"));
+    GEngine->AddOnScreenDebugMessage(3, 60, FColor::Green, TEXT("[Space] Resets Player to Start Position and Rotation"));
+    GEngine->AddOnScreenDebugMessage(2, 60, FColor::Green, TEXT("[ESC] Closes this window and shuts down clients"));
+    GEngine->AddOnScreenDebugMessage(1, 60, FColor::Green, TEXT("[F1] Prints this help"));
 }
 
 void ACaveHeadCharacter::ResetHead()
