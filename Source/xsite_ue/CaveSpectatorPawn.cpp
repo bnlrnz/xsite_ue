@@ -31,6 +31,7 @@ void ACaveSpectatorPawn::BeginPlay()
 {
     Super::BeginPlay();
 
+    // TODO: we dont need the default window unless we are on the server. The default window should have the same features as MultiViewportCameraActors Slate Window.
     if (GEngine)
     {
         auto *MyGameSettings = GEngine->GetGameUserSettings();
