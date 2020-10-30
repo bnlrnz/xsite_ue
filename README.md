@@ -1,9 +1,10 @@
 # xsite_ue
 
 Unreal Engine Cave Plugin for Unreal Engine Version 4.25.4 (4.25.0-4.25.4 or newer versions may or may not work...)
-This Plugin is somewhat similar to nDisplay (but a lot smaller, easier). However, it runs on Linux, Mac and Windows.
+This Plugin is somewhat similar to nDisplay (but a lot smaller, easier and not as sophisticated).
+However, it runs on Linux, Mac and Windows since it is independent from any rendering api.
 
-Disclaimer: This plugin is suited for our environment only, there is a lot of potential for generalization!
+Disclaimer: This plugin is suited for our environment only, but there is a lot of potential for generalization!
 
 Features:
 
@@ -18,7 +19,8 @@ Features:
 - single configuration file (json) for all computers
 
 <img src="/Doc/demo.jpg" width="400">
-Example scene running an Unreal Engine Demo with the xsite_ue in our CAVE at the TU Bergakademie Freiberg computer science department.
+Example scene running an Unreal Engine Demo with the xsite_ue plugin in our CAVE at the TU Bergakademie Freiberg computer science department.
+The shown front wall contains of 9 overlapping projector images which get warped and blended.
 
 ## Demo Application
 You can find a preconfigured demo project here: [xsite_ue_example](https://github.com/bnlrnz/xsite_ue_example)
