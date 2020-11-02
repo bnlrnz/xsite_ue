@@ -18,7 +18,9 @@ Features:
 - some templates for flystick interaction (draggable object, buttons)
 - single configuration file (json) for all computers
 
+<p align="center">
 <img src="/Doc/demo.jpg" width="400">
+</p>
 Example scene running an Unreal Engine Demo with the xsite_ue plugin in our CAVE at the TU Bergakademie Freiberg computer science department.
 The shown front wall contains of 9 overlapping projector images which get warped and blended.
 
@@ -90,6 +92,59 @@ Cave_Execute "..." executes commands on the server and all clients. This is usef
 - Cave_Execute r.PostProcessAAQuality 0-6 (Performace, depending on you AA method)
 - See [ScalabilityReference](https://docs.unrealengine.com/en-US/Engine/Performance/Scalability/ScalabilityReference/index.html) for more Performance Options/Tweaks
 
+### Layout of the configuration file
 
+```
+root
+|
+|----system // this is only used to label this file, it will not be used inside unreal
+|----date   // as system
+|----eye    // the position of the camera in meters [x,y,z]
+|----walls  // an array that contains the definitions of planar surfaces on which we will project our screens/windows
+       |
+       |----name   // to identify the wall
+       |----size   // in meters, width and height, you can simply measure or just choose a size with the correct aspect ratio [width,height]
+       |----normal // in which direction does the wall face [x,y,z]
+       |----bounds
+       |       |----top_left [x,y,z]
+       |       |----bottom_right  // the extents of the wall in real world coordinates (meters), this should corresponde with the size [x,y,z]
+       |
+       |----camera
+       |      |----F  // camera intrisics, you can leave these empty if you dont need/want to warp [0-8]
+       |      |----Fi // camera intrisics, you can leave these empty if you dont need/want to warp [0-8]
+       |
+       |----clients // an array that contains all computers which will participate in rendering the scene
+              |----name // this is important, place hostname here, it will identify which extra window to spawn! * is a wildcard here, every computer will spawn the following screens/projectors
+              |----id   // not used for now, ignore this
+              |----ip   // not used for now, ignore this
+              |----projectors // array of windows that will be spawned
+                        |----name       // just an identifier
+                        |----id         // not used for now, ignore this
+                        |----display    // not used for now, ignore this
+                        |----screen     // not used for now, ignore this
+                        |----resolution // the windows resolution in pixels [width, height]
+                        |----offset     // the windows offset in pixels [width, height] (top left corner position),e.g. you can use this in an extended FullHD dual monitor setup to shift one window 1920px to the right/left
+                        |----alphamask  // name of the png file that includes the alpha mask, this is used for blending, if you leave this blank no blending shader will be applied
+                        |----corners // this contains the definition of some corners/extents for several coordinate systems (not all are used/usefull for us)
+                        |       |----projector_space // not used for now, ignore this
+                        |       |----camera_space    // not used for now, ignore this; the extents of this screen/projector in camera space coordinates
+                        |       |         |----top_left [x,y]
+                        |       |         |----top_right [x,y]
+                        |       |         |----bottom_right [x,y]
+                        |       |         |----bottom_left [x,y]
+                        |       |
+                        |       |----display_space   // this is important; the relativ extents of this screen/projector corresponding to its wall
+                        |                 |----top_left [x,y]
+                        |                 |----top_right [x,y]
+                        |                 |----bottom_right [x,y]
+                        |                 |----bottom_left [x,y]
+                        |
+                        |----view_volume  // not used for now, ignore this; the coordinates defining the view frustum; this is calculated by the other values in unreal coordinates
+                        |         |----pa //[x,y,z]
+                        |         |----pb //[x,y,z]
+                        |         |----pc //[x,y,z]
+                        |
+                        |----H_x,H_y,Hi_x,Hi_y // warping parameters, you can leave these empty if you dont need/want to warp; each with 10 elements
+```
 
 
