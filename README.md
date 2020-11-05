@@ -19,7 +19,7 @@ Features:
 - single configuration file (json) for all computers
 
 <p align="center">
-<img src="/Doc/demo.jpg" width="400">
+<img src="/Doc/demo.jpg" width="600">
 </p>
 Example scene running an Unreal Engine Demo with the xsite_ue plugin in our CAVE at the TU Bergakademie Freiberg computer science department.
 The shown front wall contains of 9 overlapping projector images which get warped and blended.
@@ -44,25 +44,35 @@ The Editor should build the Plugin on startup. You can build it yourself from th
 ## Show Plugin Content
 To display the plugins content (sources, materials, blueprints ...) in the "Content Browser", click on "View Options" (eye symbol in the bottom right of the "Content Browser") and activate "Show Plugin Content".
 
-![](/Doc/set3.png)
+<p align="center">
+<img src="/Doc/set3.png" width="600">
+</p>
 
 ## Setting Up the Plugin
 - Enable the Plugin in the Project Settings. (It should be under "Project" not "Built-In"; Scroll all the way down in the plugins windows left bar.)
 - Select "OffAxisLocalPlayer" as Local Player Class in the Engine - General Settings
 
-![](/Doc/set1.png)
+<p align="center">
+<img src="/Doc/set1.png" width="600">
+</p>
 
 - Select "CaveGameInstance" as Game Instance in the Project - Maps & Modes
 
-![](/Doc/GameInstance.png)
+<p align="center">
+<img src="/Doc/GameInstance.png" width="600">
+</p>
 
 - Select "CaveGameModeBase" as Default GameMode in the Project - Maps & Modes
 
-![](/Doc/set2.png)
+<p align="center">
+<img src="/Doc/set2.png" width="600">
+</p>
 
 - Import Input Settings from [InputBackup.ini](https://github.com/bnlrnz/xsite_ue/blob/main/InputBackup.ini)
 
-![](Doc/input_setup.png)
+<p align="center">
+<img src="/Doc/input_setup.png" width="600">
+</p>
 
 ## Getting started
 
