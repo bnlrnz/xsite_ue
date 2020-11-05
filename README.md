@@ -91,15 +91,15 @@ You can execute some predefined console commands for the cave environment. [TAB]
 
 Cave_Execute "..." executes commands on the server and all clients. This is useful for debugging or performance tweaking:
 
-- Cave_Execute r.DepthOfFieldQuality 0 disables depth of field
-- Cave_Execute r.ssr.quality 0 disables screen space reflections which flicker a lot
-- Cave_Execute r.PostProcessingAAQuality 1 some weird angled frustums jump around if AA is used, try this
-- Cave_Execute r.SceneRenderTargetResizeMethod 2 resizing the render buffer if you have multiple windows with different resolution on one computer
-- Cave_Execute r.AllowOcclusionQueries 0 unreals culling does not work well with multiple view frustums, flickering objects etc.; this command disables the culling
-- Cave_Execute Gamma 0-10 (if screens are too dark)
-- Cave_Execute r.ScreenPercentage 0-100 (Scale render resolution, Performance)
-- Cave_Execute sg.PostProcessQuality 0-3 (Performance)
-- Cave_Execute r.PostProcessAAQuality 0-6 (Performace, depending on you AA method)
+- **Cave_Execute r.DepthOfFieldQuality 0** disables depth of field
+- **Cave_Execute r.ssr.quality 0** disables screen space reflections which flicker a lot
+- **Cave_Execute r.PostProcessingAAQuality 1** some weird angled frustums jump around if AA is used, try this
+- **Cave_Execute r.SceneRenderTargetResizeMethod 2** resizing the render buffer if you have multiple windows with different resolution on one computer
+- **Cave_Execute r.AllowOcclusionQueries 0** unreals culling does not work well with multiple view frustums, flickering objects etc.; this command disables the culling
+- **Cave_Execute Gamma 0-10** (if screens are too dark)
+- **Cave_Execute r.ScreenPercentage 0-100** (Scale render resolution, Performance)
+- **Cave_Execute sg.PostProcessQuality 0-3** (Performance)
+- **Cave_Execute r.PostProcessAAQuality 0-6** (Performace, depending on you AA method)
 - See [ScalabilityReference](https://docs.unrealengine.com/en-US/Engine/Performance/Scalability/ScalabilityReference/index.html) for more Performance Options/Tweaks
 
 ### Layout of the configuration file
