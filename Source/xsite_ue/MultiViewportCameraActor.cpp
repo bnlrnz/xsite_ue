@@ -31,7 +31,7 @@ AMultiViewportCameraActor::AMultiViewportCameraActor()
 {
     SetActorLocation(FVector(0.0f, 0.0f, 0.0f));
 
-    SetReplicates(false);
+    bReplicates = false;
     SetReplicateMovement(false);
 
     // Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.

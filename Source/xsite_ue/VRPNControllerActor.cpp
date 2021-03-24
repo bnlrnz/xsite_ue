@@ -11,7 +11,7 @@ AVRPNControllerActor::AVRPNControllerActor()
 	PrimaryActorTick.bCanEverTick = true;
 
 	// this is only needed on server
-	SetReplicates(false);
+    bReplicates = false;
 }
 
 // Called when the game starts or when spawned

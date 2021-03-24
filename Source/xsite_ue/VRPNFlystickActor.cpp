@@ -27,7 +27,7 @@ TrackerUnitsToUE4Units = 100
 // Sets default values
 AVRPNFlystickActor::AVRPNFlystickActor()
 {
-    SetReplicates(true);
+    bReplicates = true;
     bAlwaysRelevant = true;
 
     // Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.

@@ -20,7 +20,7 @@ ACaveHeadCharacter::ACaveHeadCharacter()
     // Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
     PrimaryActorTick.bCanEverTick = true;
 
-    SetReplicates(true);
+    bReplicates = true;
 
     // Since we replicate by net nulticast, this is not needed
     SetReplicateMovement(false);
