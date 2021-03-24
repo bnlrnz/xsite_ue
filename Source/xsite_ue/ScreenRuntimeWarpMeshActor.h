@@ -8,9 +8,12 @@
 #include "xsite_ue.h"
 #include "ScreenRuntimeWarpMeshActor.generated.h"
 
-// TODO parameterize this with screen
+// UNUSED!
+
+// TODO: parameterize this with screen
 // Spawn like: AScreenRuntimeWarpMeshActor* WarpMesh = GetWorld()->SpawnActor<AScreenRuntimeWarpMeshActor>(AScreenRuntimeWarpMeshActor::StaticClass(), FVector(0,0,0), FRotator(0,90,0));
 
+// TODO: Currently the warping is done in the fragment shader/as blendable post processing effect. We could also render our scene to an offscreen render buffer/texture and map this texture on a warped mesh.
 UCLASS()
 class AScreenRuntimeWarpMeshActor : public AActor
 {

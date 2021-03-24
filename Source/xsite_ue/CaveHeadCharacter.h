@@ -27,9 +27,10 @@ public:
     UPROPERTY(Replicated)
     bool bHeadtrackingEnabled = false;
 
-    UFUNCTION()
     FVector GetRealHeadLocation();
 
+    // I tried normal replication, movement replication, smoothing on client side... but always got jaggy rotation replication
+    // Doing a simple rpc seems to work fine here. At least on a LAN (which is our use case)
     UFUNCTION(NetMulticast, Reliable)
     void Multicast_UpdateLocationAndRotation(FVector Loc, FRotator Rot);
 
@@ -105,22 +106,17 @@ private:
 
     float SpeedFactor = 1.0f;
 
-    UFUNCTION()
     void SlowEnabled();
 
-    UFUNCTION()
     void SlowDisabled();
 
     // handles moving head forward - backward / screen up - down
-    UFUNCTION()
     void MoveForward(float Val);
 
     // handles strafing
-    UFUNCTION()
     void StrafeRight(float Val);
 
     // handle moving head up - down / screen forward - backward
-    UFUNCTION()
     void MoveUp(float Val);
 
     virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;

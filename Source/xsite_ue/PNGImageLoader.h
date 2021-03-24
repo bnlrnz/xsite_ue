@@ -8,7 +8,7 @@
 #include "Runtime/ImageWrapper/Public/IImageWrapperModule.h"
 
 /**
- * 
+ * Helper Class to load png images at runtime - this is used to load the blending masks
  */
 class PNGImageLoader
 {

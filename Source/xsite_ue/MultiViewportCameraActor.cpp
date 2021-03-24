@@ -94,12 +94,10 @@ void AMultiViewportCameraActor::BeginPlay()
 
     CamManager = nullptr;
 
-    UWorld* World = GetWorld();
-
-    if (World)
+    if (GetWorld())
     {
         // Get the player controller
-        for (FConstPlayerControllerIterator Iterator = World->GetPlayerControllerIterator(); Iterator; ++Iterator)
+        for (FConstPlayerControllerIterator Iterator = GetWorld()->GetPlayerControllerIterator(); Iterator; ++Iterator)
         {
             APlayerController *PlayerControllerTemp = Iterator->Get();
             if (PlayerControllerTemp && PlayerControllerTemp->PlayerCameraManager)
@@ -110,7 +108,7 @@ void AMultiViewportCameraActor::BeginPlay()
         }
     }
 
-    if (CamManager == nullptr && !bLockToPlayerCam)
+    if (CamManager == nullptr)
     {
         GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Red,
                                          FString(TEXT("ExtraCamWindow Error: No Player Camera Manager found!")));
@@ -118,22 +116,16 @@ void AMultiViewportCameraActor::BeginPlay()
         return;
     }
 
-    if (!bLockToPlayerCam)
-        GetCameraComponent()->bLockToHmd = false;
-
     // this inits the Slate Renderer (that thing responsible for drawing the window)
     FSlateApplication::Get().GetRenderer();
 
-    if (bLockResToMainWindow)
-        GEngine->GameViewport->GetViewportSize(InitialWindowRes);
-
     SAssignNew(ExtraWindow, SWindow)
         .ClientSize(InitialWindowRes)
-        .SizingRule(bLockResToMainWindow ? ESizingRule::FixedSize : ESizingRule::UserSized)
+        .SizingRule(ESizingRule::FixedSize)
         .UseOSWindowBorder(true)
         .Title(FText::FromString(FString::Printf(TEXT("%s - %s"), *WindowTitle.ToString(),
                                                  GetWorld()->IsServer() ? TEXT("Server") : TEXT("Client"))))
-        .FocusWhenFirstShown(bLockMouseFocusToExtraWindow)
+        .FocusWhenFirstShown(false)
         .CreateTitleBar(false);
 
     FSlateApplication::Get().AddWindow(ExtraWindow.ToSharedRef(), true);
@@ -145,11 +137,11 @@ void AMultiViewportCameraActor::BeginPlay()
     SGameLayerManager::FArguments arguments = SGameLayerManager::FArguments();
     arguments.SceneViewport(GEngine->GameViewport->GetGameViewport());
     arguments.Visibility(EVisibility::Visible);
-    arguments.Cursor(CursorInWindow)[ViewportOverlayWidget.ToSharedRef()];
+    arguments.Cursor(EMouseCursor::None)[ViewportOverlayWidget.ToSharedRef()];
 
     LayerManagerRef.Get().Construct(arguments);
     LayerManagerRef.Get().SetVisibility(EVisibility::Visible);
-    LayerManagerRef.Get().SetCursor(CursorInWindow);
+    LayerManagerRef.Get().SetCursor(EMouseCursor::None);
     // LayerManagerRef.Get().UseScissor(false);
 
     TSharedPtr<SViewport> Viewport = SNew(SViewport)
@@ -157,7 +149,7 @@ void AMultiViewportCameraActor::BeginPlay()
                                              false) // true crashes some stuff because HMDs need the rendertarget tex for distortion etc..
                                          .EnableGammaCorrection(false)
                                          .EnableStereoRendering(false) // not displaying on an HMD
-                                         .Cursor(CursorInWindow)[LayerManagerRef];
+                                         .Cursor(EMouseCursor::None)[LayerManagerRef];
 
     SceneViewport = MakeShareable(new FSceneViewport(GEngine->GameViewport, Viewport));
 
@@ -182,26 +174,12 @@ void AMultiViewportCameraActor::BeginPlay()
 
     ExtraWindow->ShowWindow();
 
-    SceneViewport->CaptureMouse(bLockMouseFocusToExtraWindow);
-    SceneViewport->SetUserFocus(bLockMouseFocusToExtraWindow);
-    SceneViewport->LockMouseToViewport(bLockMouseFocusToExtraWindow);
+    SceneViewport->CaptureMouse(false);
+    SceneViewport->SetUserFocus(false);
+    SceneViewport->LockMouseToViewport(false);
 
     // the window and some stuff gets initialized by ticking slate, otherwise we get a thread-related crash in packaged builds..
     FSlateApplication::Get().Tick();
-
-    SceneViewport->SetOnSceneViewportResizeDel(FOnSceneViewportResize::CreateLambda([this](FVector2D newViewportSize) {
-        if (!bLockResToMainWindow)
-            return;
-
-        // deny any window resolution change in the child windows
-        FVector2D mainViewportSize;
-        GEngine->GameViewport->GetViewportSize(mainViewportSize);
-
-        if (mainViewportSize.X != newViewportSize.X || mainViewportSize.Y != newViewportSize.Y)
-            SceneViewport->ResizeFrame((uint32)mainViewportSize.X, (uint32)mainViewportSize.Y, EWindowMode::Windowed);
-    }));
-
-    bStandaloneGame = this->GetWorld()->WorldType == EWorldType::Game;
 
     UE_LOG(LogCave, Display, TEXT("[%s] Spawning Extra Window resolution: %s offset: %s"), *WindowTitle.ToString(), *InitialWindowRes.ToString(), *InitialWindowPos.ToString());
 
@@ -230,8 +208,6 @@ void AMultiViewportCameraActor::BeginPlay()
         this->PlayerController->ConsoleCommand("r.SceneRenderTargetResizeMethod 2");
     }
 
-    CaveGameInstance->Cave_HideDefaultWindow();
-
     // initialize everything before we call base class so that in blueprint beginplay everything is ready
     Super::BeginPlay();
 }
@@ -245,6 +221,7 @@ void AMultiViewportCameraActor::ConfigureBlendMaterial(const ACaveControllerActo
     if (ScreenCalibrationData.alphamask.Len() == 0)
     {
         UE_LOG(LogCave, Warning, TEXT("[%s] No alphamask/blend texture set in calibration JSON."), *WindowTitle.ToString());
+        bUseBlending = false;
         return;
     }
    
@@ -299,6 +276,7 @@ void AMultiViewportCameraActor::ConfigureWarpMaterial(const FProjectorData& Scre
     )
     {
         UE_LOG(LogCave, Warning, TEXT("[%s] All or some warp data missing. Skipping creation of warp shader..."), *WindowTitle.ToString());
+        bUseWarping = false;
         return;
     }
     
@@ -389,15 +367,24 @@ void AMultiViewportCameraActor::IdentifyScreen()
     TextBox->ViewportOffset = FVector2D(InitialWindowRes.X / 2, InitialWindowRes.Y / 2);
     TextBox->Text = FString::Printf(TEXT("%s\n%s"), *WindowTitle.ToString(),
                                     GetWorld()->IsServer() ? TEXT("Server") : TEXT("Client"));
-
+    
     // add text widget to screen
     AddWidgetToExtraCam(TextBox, 999);
+    
+    bScreenIdentifyEnabled = true;
 }
 
 void AMultiViewportCameraActor::IdentifyScreenClear()
 {
+    if (IsValid(TextBox))
+    {
+        RemoveWidgetFromExtraCam(TextBox);
+    }
+
     // remove all old widgets
     ViewportOverlayWidget->ClearChildren();
+
+    bScreenIdentifyEnabled = false;
 }
 
 bool AMultiViewportCameraActor::AddWidgetToExtraCam(UUserWidget *inWidget, int32 zOrder /* = -1 */)
@@ -422,35 +409,26 @@ void AMultiViewportCameraActor::Tick(float delta)
 {
     Super::Tick(delta);
 
-    if (!bEnabledScreen) // this should not happen at this point, but just to be shure
+    // this should not happen at this point, but just to be shure
+    if (!bEnabledScreen)
         return;
-    
-    // Attach to Cave Head to always apply its location and rotation
-    // if (!bAttachedToCaveHead && CaveGameInstance != nullptr)
-    // {
-    //     AttachToActor(
-    //         CaveGameInstance->GetCaveHeadCharacter(),
-    //         FAttachmentTransformRules(EAttachmentRule::SnapToTarget, false)
-    //     );
+   
+    // if we got here, we dont need the default window anymore
+    if (!GIsEditor)
+        CaveGameInstance->Cave_HideDefaultWindow();
 
-    //     bAttachedToCaveHead = true;
-    // }
-
-    // apply current location and rotation to camera
-    // this is now done by attaching each MultiViewportCameraActor to the CaveHeadCharacter
-    //this->PlayerController->SetControlRotation(CaveGameInstance->GetCaveHeadCharacter()->GetActorForwardVector().Rotation());
-    //SetControlRotation(CaveGameInstance->GetCaveHeadCharacter()->GetActorRotation());
-
-    // makes the replicated rotation much smoother, but introduces a little bit of lag
-    // FRotator OldRotation = GetActorRotation();
-    // FRotator TargetRotation = CaveGameInstance->GetCaveHeadCharacter()->GetActorRotation();
-
-    // if (!OldRotation.Equals(TargetRotation))
-    // {
-    //     // last param 30 Degrees per Second = Allowed Speed, less -> slower, more -> possible stuttering
-    //     FRotator NewRotation = FMath::RInterpTo(OldRotation, TargetRotation, delta, 30);
-    //     SetActorRotation(NewRotation);
-    // }
+    if (bScreenIdentifyEnabled)
+    {
+        if (IsValid(TextBox))
+        {
+            TextBox->TextBlock->SetText(
+                FText::FromString(FString::Printf(TEXT("%s\n%s\n%.2f FPS"),
+                    *WindowTitle.ToString(),
+                    GetWorld()->IsServer() ? TEXT("Server") : TEXT("Client"),
+                    1.0f/delta))
+            );
+        }
+    }
 
     // replicating the rotation and location via net multicast rpc from server to the clients seems to work fine
     SetActorLocation(CaveGameInstance->GetCaveHeadCharacter()->NetLoc);
@@ -482,34 +460,17 @@ void AMultiViewportCameraActor::Tick(float delta)
         GetCameraComponent()->PostProcessSettings.RemoveBlendable(BlendMaterialInstance_Dynamic);
     }
 
-    if (bLockToPlayerCam)
-    {
-        // adjust camera to fit this actor
-        AActor *oldTarget = nullptr;
-        oldTarget = CamManager->GetViewTarget();
-
-        CamManager->SetViewTarget(this);
-        CamManager->UpdateCamera(0.0f);
-
-        SceneViewport->Draw();
-
-        // reset camera to player camera
-        CamManager->SetViewTarget(oldTarget);
-
-        return;
-    }
-
     // adjust camera to fit this actor
-    // AActor *oldTarget = nullptr;
-    // oldTarget = CamManager->GetViewTarget();
+    AActor *oldTarget = nullptr;
+    oldTarget = CamManager->GetViewTarget();
 
-    // CamManager->SetViewTarget(this);
-    // CamManager->UpdateCamera(0.0f);
+    CamManager->SetViewTarget(this);
+    CamManager->UpdateCamera(0.0f);
 
-    // SceneViewport->Draw();
+    SceneViewport->Draw();
 
-    // // reset camera to player camera
-    // CamManager->SetViewTarget(oldTarget);
+    // reset camera to player camera
+    CamManager->SetViewTarget(oldTarget);
 }
 
 void AMultiViewportCameraActor::EndPlay(const EEndPlayReason::Type EndPlayReason)

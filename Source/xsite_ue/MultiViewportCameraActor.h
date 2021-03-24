@@ -22,12 +22,12 @@ public:
     // Sets default values for this actor's properties
     AMultiViewportCameraActor();
 
+    // Displays text on screen to identify hostname, window and also shows framerate (fps)
     void IdentifyScreen();
-
     void IdentifyScreenClear();
+    bool bScreenIdentifyEnabled = false;
 
-    /** This indicates which client should render this screen. If this string matches the hostname of a machine, the window will be displayed. With "AllClients", the window will displayed everywhere.*/
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
+    UPROPERTY()
     FString ClientName = "";
 
     bool bEnabledScreen = true;
@@ -36,36 +36,20 @@ public:
     UFUNCTION( Server, Unreliable, WithValidation )
     void ServerScreenAttached(const FString& ComputerName, const FString& ScreenName);
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
+    UPROPERTY()
     FText WindowTitle = FText::FromString(TEXT("ExtraCamWindow"));
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
+    UPROPERTY()
     FVector2D InitialWindowRes = FVector2D(640, 360);
 
-    /** window position, usefull for multi monitor setup */
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
+    UPROPERTY()
     FVector2D InitialWindowPos = FVector2D(0, 0);
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    bool bLockToPlayerCam = true;
-
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    bool bLockMouseFocusToExtraWindow = false;
-
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    TEnumAsByte<EMouseCursor::Type> CursorInWindow = EMouseCursor::None;
-
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    bool bLockResToMainWindow = false;
-
-    UFUNCTION(BlueprintCallable, Category = "ExtraCamWindow")
+    UFUNCTION()
     bool AddWidgetToExtraCam(UUserWidget *inWidget, int32 zOrder = -1);
 
-    UFUNCTION(BlueprintCallable, Category = "ExtraCamWindow")
+    UFUNCTION()
     bool RemoveWidgetFromExtraCam(UUserWidget *inWidget);
-
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    bool bShowDebugOutput = false;
 
     // The screen bounds
     UPROPERTY()
@@ -123,8 +107,6 @@ public:
     bool bUseWarping = true;
 
 private:
-    bool bAttachedToCaveHead = false;
-
     bool bWarpingEnabled = true;
     bool bBlendingEnabled = true;
 
@@ -147,8 +129,6 @@ private:
     
     UPROPERTY()
     APlayerCameraManager *CamManager = nullptr;
-
-    bool bStandaloneGame = false;
 
     UPROPERTY()
     UCaveGameInstance *CaveGameInstance = nullptr;

@@ -39,7 +39,7 @@ TSharedRef<SWidget> UTextBoxWidget::RebuildWidget()
     {
         TextBlock = WidgetTree->ConstructWidget<UTextBlock>(UTextBlock::StaticClass(), TEXT("TextBlock"));
         TextBlock->SetText(FText::FromString(Text));
-        TextBlock->Font.Size = int32(0.06 * ViewportSize.Y);
+        TextBlock->Font.Size = int32(0.05 * ViewportSize.Y);
         RootWidget->AddChild(TextBlock);
         UCanvasPanelSlot *TextBlockSlot = Cast<UCanvasPanelSlot>(TextBlock->Slot);
         if (TextBlockSlot)

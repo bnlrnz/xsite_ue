@@ -6,6 +6,10 @@
 #include "Engine/GameViewportClient.h"
 #include "WarpingViewportClient.generated.h"
 
+// UNUSED!
+
+// TODO: Currently the warping is done in the fragment shader/as blendable post processing effect. We could also render our scene to an offscreen render buffer/texture and map this texture on a warped mesh.
+
 /**
  * To tell the engine to use our custom class instead of the base engine version 
  * we have to add the following into the projects DefaultEngine.ini file.

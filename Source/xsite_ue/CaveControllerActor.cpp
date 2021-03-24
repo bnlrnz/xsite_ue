@@ -122,9 +122,8 @@ void ACaveControllerActor::LoadWallScreenConfig()
 
             for (auto Proj : Client.projectors)
             {
-                // GameMode is only present on server
-                // every client will spawn its own OffAxisCameraExtraWindowActors
-                // the clients will skip all OffAxisCameraExtraWindowActors but their own
+                // every client will spawn its own AMultiViewportCameraActors
+                // the clients will skip all AMultiViewportCameraActors but their own
 
                 auto OffAxisCameraExtraWindowActor = GetWorld()->SpawnActorDeferred<AMultiViewportCameraActor>(AMultiViewportCameraActor::StaticClass(), FTransform());
 
@@ -207,13 +206,12 @@ void ACaveControllerActor::LoadWallScreenConfig()
                 // We now got the Wall extents and normalized vetors from wall origin to the edges
                 // We kann now calculate the screen center in wall/world coordinates from the display space corners
                 // Display Space Corners -> relative corners of a screen in relation to its wall
-                //	TopLeft, TopRight, BottomRight, BottomLeft
                 //
-                // example: (0,0), (0.5,0), (0.5,0.3), (0,0.3)
+                // example: 0(0,0), 1(0.5,0), 2(0,0.3), 3(0.5,0.3)
                 //
-                //		x-------x-------|
+                //		0-------1-------|
                 //		|Screen |		|
-                //		x-------x-------|
+                //		2-------3-------|
                 //		|		|		|
                 //		|---------------|
                 //		|		|		|
@@ -242,8 +240,7 @@ void ACaveControllerActor::LoadWallScreenConfig()
 
                 UGameplayStatics::FinishSpawningActor(OffAxisCameraExtraWindowActor, FTransform());
 
-                UE_LOG(LogCave, Display, TEXT("[%s] Finishing Actor spawn, size: %s, screen top left: %s\n\n"), *OffAxisCameraExtraWindowActor->WindowTitle.ToString(), *Wall.name, *OffAxisCameraExtraWindowActor->ScreenSize.ToString(), *Screen_tl.ToString());
-                //}
+                UE_LOG(LogCave, Display, TEXT("[%s] Finishing Actor spawn, size: %s, screen top left: %s\n\n"), *OffAxisCameraExtraWindowActor->WindowTitle.ToString(), *Wall.name, *OffAxisCameraExtraWindowActor->ScreenSize.ToString(), *Screen_tl.ToString())
             }
         }
     }
