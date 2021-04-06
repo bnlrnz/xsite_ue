@@ -9,6 +9,12 @@
 #include "VRPNController.h"
 #include "CaveHeadCharacter.generated.h"
 
+// TODO:
+// This does not have to be a character anymore since we replicate with rpc's.
+// There was the plan to utilize the character-built-in network smoothing, but this did introduce a lot of lag.
+// We could basically transfer most/all of the logic of this class to the CaveSpectatorPawn.
+// But the CaveSpectatorPawn must differentiate between Server and Client functionality, which is basically what this class here does now. (CaveHeadCharacter = Pawn with Server abilities, CaveSpactator Pawn = Pawn from the Clients)
+
 UCLASS()
 class  ACaveHeadCharacter : public ACharacter {
     GENERATED_BODY()
