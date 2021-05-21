@@ -31,6 +31,11 @@ void ACaveControllerActor::BeginPlay()
     LoadWallScreenConfig();
 }
 
+// This function parses the json config file for the cave setup.
+// After parsing it spawns the actors corresponding to the current client.
+// All relevant information for the actor are transfered.
+// The actor will spawn a seperate window with settings according to the pared json config.
+// This includes the resolution, the window position (if multiple screens are used), off axis camera parameters, blending and warping.
 void ACaveControllerActor::LoadWallScreenConfig()
 {
     UE_LOG(LogCave, Warning, TEXT("Trying to load Cave configuration for %s"), FPlatformProcess::ComputerName());

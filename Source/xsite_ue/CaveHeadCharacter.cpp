@@ -56,7 +56,8 @@ ACaveHeadCharacter::ACaveHeadCharacter()
 void ACaveHeadCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
     Super::GetLifetimeReplicatedProps(OutLifetimeProps);
-
+    
+    // These variables will be replicated through the network.
     DOREPLIFETIME(ACaveHeadCharacter, bHeadtrackingEnabled);
     DOREPLIFETIME(ACaveHeadCharacter, HeadOrigin);
     DOREPLIFETIME(ACaveHeadCharacter, PlayerStartLocation);
@@ -69,6 +70,7 @@ void ACaveHeadCharacter::BeginPlay()
     Super::BeginPlay();
     ToggleGhost();
 
+    // The cave head should only exist on the server.
     if (!GetWorld()->IsServer())
         return;
 

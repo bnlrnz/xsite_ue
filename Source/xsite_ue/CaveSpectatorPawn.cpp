@@ -52,7 +52,9 @@ void ACaveSpectatorPawn::BeginPlay()
         MyGameSettings->SaveSettings();
     }
 
-    // do we have a cave head yet? (server)
+    // Do we have a cave head yet? (server)
+    // If no server to connect exists, the clients will spawn there own "cave head".
+    // This will allow moving around etc. but will noch work in the actual cave.
     ACaveHeadCharacter *CaveHeadCharacter = nullptr;
     for (TActorIterator<ACaveHeadCharacter> ActorItr(GetWorld()); ActorItr; ++ActorItr)
     {
