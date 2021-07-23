@@ -30,6 +30,10 @@ public:
     UPROPERTY(BlueprintReadOnly)
     TEnumAsByte<ButtonState> PrimaryButtonState = ButtonState::Released;
 
+    UFUNCTION(BlueprintImplementableEvent, Category = "Flystick")
+    void OnPrimaryButtonStateChanged(ButtonState NewState);
+    void OnPrimaryButtonStateChanged_Implementation(ButtonState NewState);
+
 protected:
     // Called when the game starts or when spawned
     virtual void BeginPlay() override;
@@ -41,8 +45,12 @@ public:
     UFUNCTION(NetMulticast, Reliable)
     void Multicast_UpdatePointer(FVector NetStart, FVector NetEnd, bool NetbIsHit);
 
+    UPROPERTY(BlueprintReadOnly)
     FVector Start = FVector(50.0f, 0.0f, 0.0f);
+
+    UPROPERTY(BlueprintReadOnly)
     FVector End = FVector(205.0f, 0.0f, 0.0f);
+
     bool bIsHit = false;
 
     UPROPERTY(BlueprintReadWrite)

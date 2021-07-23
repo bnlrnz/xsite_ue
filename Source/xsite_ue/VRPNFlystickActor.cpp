@@ -166,6 +166,7 @@ void AVRPNFlystickActor::BeginPlay()
             {
                 bPrimaryClick = true;
                 PrimaryButtonState = state;
+                OnPrimaryButtonStateChanged(state);
             }
 
             if (button == 4)
@@ -393,6 +394,8 @@ void AVRPNFlystickActor::HandleNavigate()
         this->DragStartRotation - Direction.Rotation() + this->CaveHeadCharacterStartRotation,
         ETeleportType::None);
 }
+
+void AVRPNFlystickActor::OnPrimaryButtonStateChanged_Implementation(ButtonState NewState){};
 
 void AVRPNFlystickActor::DeselectPointedActor()
 {
