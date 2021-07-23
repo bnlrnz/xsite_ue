@@ -40,7 +40,10 @@ public:
     UFUNCTION(NetMulticast, Reliable)
     void Multicast_UpdateLocationAndRotation(FVector Loc, FRotator Rot);
 
+    UPROPERTY(BlueprintReadOnly, Category = "CaveHead")
     FVector NetLoc = FVector(0,0,0);
+
+    UPROPERTY(BlueprintReadOnly, Category = "CaveHead")
     FRotator NetRot = FRotator(0,0,0);
 
     UFUNCTION(NetMulticast, Reliable)
