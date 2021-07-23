@@ -45,10 +45,10 @@ public:
     UFUNCTION(NetMulticast, Reliable)
     void Multicast_UpdatePointer(FVector NetStart, FVector NetEnd, bool NetbIsHit);
 
-    UPROPERTY(BlueprintReadOnly)
+    UPROPERTY(BlueprintReadOnly, Category = "Flystick")
     FVector Start = FVector(50.0f, 0.0f, 0.0f);
 
-    UPROPERTY(BlueprintReadOnly)
+    UPROPERTY(BlueprintReadOnly, Category = "Flystick")
     FVector End = FVector(205.0f, 0.0f, 0.0f);
 
     bool bIsHit = false;
