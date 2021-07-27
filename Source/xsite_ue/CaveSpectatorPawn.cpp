@@ -7,7 +7,7 @@
 ACaveSpectatorPawn::ACaveSpectatorPawn(const FObjectInitializer &ObjectInitializer) : Super(ObjectInitializer)
 {
     // dont replicate, pls
-    SetReplicates(false);
+    bReplicates = false;
 
     // no tick, pls
     SetActorTickEnabled(false);
