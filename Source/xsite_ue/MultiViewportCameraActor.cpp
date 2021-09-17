@@ -197,11 +197,11 @@ void AMultiViewportCameraActor::BeginPlay()
             //TODO: this is just for performance testing!
             // Edit from server with Cave_Execute "command"
             // https://docs.unrealengine.com/en-US/Engine/Performance/Scalability/ScalabilityReference/index.html
-            this->PlayerController->ConsoleCommand("Gamma 5"); // our cave is currently really dark
+            this->PlayerController->ConsoleCommand("Gamma 3"); // our cave is currently really dark
             this->PlayerController->ConsoleCommand("r.DepthOfFieldQuality 0"); // we don't want that
-            this->PlayerController->ConsoleCommand("r.ScreenPercentage 50"); // our cave walls smooth quite a lot of pixels
+            this->PlayerController->ConsoleCommand("r.ScreenPercentage 85"); // our cave walls smooth quite a lot of pixels
             this->PlayerController->ConsoleCommand("r.ssr.quality 0"); // flickering water reflections if we use ssr (screen space reflections)
-            this->PlayerController->ConsoleCommand("r.PostProcessingAAQuality 1");
+            this->PlayerController->ConsoleCommand("r.PostProcessingAAQuality 1"); // this can lead to shaking screens in very distorted view frustums, apply this on runtime to get rid of shaking
         }
         
         // if there is more than 1 render target (aka we spawning this extra window), this should be set https://docs.unrealengine.com/en-US/Platforms/MR/MRTroubleshooting/index.html
