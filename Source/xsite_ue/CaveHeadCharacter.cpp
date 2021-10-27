@@ -137,9 +137,9 @@ void ACaveHeadCharacter::BeginPlay()
                 float zOffset = -HeadOrigin.Z;
 
                 this->HeadOrigin = FVector(
-                    (float)(trackerData.Pos[1] + xOffset) * 100.f,
-                    (float)(trackerData.Pos[0] + yOffset) * 100.f,
-                    (float)(trackerData.Pos[2] + zOffset) * 100.f);
+                    (float)(trackerData.Pos[1] * 100.f + xOffset),
+                    (float)(trackerData.Pos[0] * 100.f + yOffset),
+                    (float)(trackerData.Pos[2] * 100.f + zOffset));
 
                 this->HeadOrigin = this->GetController()->GetControlRotation().RotateVector(this->HeadOrigin);
             });

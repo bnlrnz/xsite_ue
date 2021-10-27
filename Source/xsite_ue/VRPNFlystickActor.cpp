@@ -111,9 +111,14 @@ void AVRPNFlystickActor::BeginPlay()
             float zOffset = -EyeOrigin.Z;
 
             this->Start = FVector(
-                (float)(trackerData.Pos[1] + xOffset) * 100.f,
-                (float)(trackerData.Pos[0] + yOffset) * 100.f,
-                (float)(trackerData.Pos[2] + zOffset) * 100.f);
+                (float)(trackerData.Pos[1] * 100.f + xOffset),
+                (float)(trackerData.Pos[0] * 100.f + yOffset),
+                (float)(trackerData.Pos[2] * 100.f + zOffset));
+
+            // UE_LOG(LogCave, Warning, TEXT("PlayerStartLocation: %s"), *this->PlayerStartLocation.ToString());
+            // UE_LOG(LogCave, Warning, TEXT("EyeOrigin: %s"), *EyeOrigin.ToString());
+
+            // UE_LOG(LogCave, Warning, TEXT("StartBefore: %s"), *this->Start.ToString());
 
             // this is exactly our case
             //https://stackoverflow.com/questions/39235842/switch-axes-and-handedness-of-a-quaternion
@@ -129,13 +134,14 @@ void AVRPNFlystickActor::BeginPlay()
                 FlystickOrientation.Yaw + YawOffset.GetValueOnGameThread(),
                 FlystickOrientation.Roll + RollOffset.GetValueOnGameThread());
 
-            //UE_LOG(LogCave, Warning, TEXT("%d - %s"), sensor, *FlystickOrientation.ToString());
 
             this->End = FlystickOrientation.RotateVector(FVector(500, 0, 0)) + this->Start;
 
             // add the player start offset (TODO: or should it be the head position?)
-            this->Start = this->CaveHeadCharacter->NetRot.RotateVector(this->Start) + PlayerStartLocation + this->PlayerStartLocation;
+            this->Start = this->CaveHeadCharacter->NetRot.RotateVector(this->Start) + this->PlayerStartLocation;
             this->End = this->CaveHeadCharacter->NetRot.RotateVector(this->End) + this->PlayerStartLocation;
+            
+            // UE_LOG(LogCave, Warning, TEXT("StartAfter: %s"), *this->Start.ToString());
         });
 
     vrpnController->AddButtonPressedCallback(
